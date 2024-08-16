@@ -8,7 +8,11 @@ public class PatternEditor : Editor {
 
     public override void OnInspectorGUI() {
         BlockGrid grid = (BlockGrid)target;
+        if (grid.pattern == null)
+        {
         grid.pattern = new BlockGrid.Colors[grid.blockSize.x, grid.blockSize.y];
+            
+        }
         EditorGUILayout.Space ();
 
         showLevels = EditorGUILayout.Foldout (showLevels, "Levels ("+1+")");
