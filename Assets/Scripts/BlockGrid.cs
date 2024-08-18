@@ -14,10 +14,11 @@ public class BlockGrid : MonoBehaviour
     public Vector2Int start;
     public Vector2Int offset;
     public Vector2Int secondOffset;
-    public BlockColors[,] pattern;
-    public BlockColors[,] patternToVerify;
+    public Pattern pattern;
+    public Pattern patternToVerify;
     public BlockColors[,] grid;
     public BlockColors[,] tempGrid;
+    
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     public void Start()
     {
@@ -28,7 +29,7 @@ public class BlockGrid : MonoBehaviour
             for(int j = 0; j < gridSize.y; j++)
             {
                 Instantiate(block, new Vector3(block.transform.localScale.x * i, -1, block.transform.localScale.x * j), block.transform.rotation, transform);
-                grid[i, j] = pattern[i%blockSize.x,j%blockSize.y];
+                grid[i, j] = pattern.GetAt(i%blockSize.x,j%blockSize.y);
                 tempGrid[i, j] = BlockColors.Uninitialized;
             }
         }
@@ -43,7 +44,7 @@ public class BlockGrid : MonoBehaviour
         }
     }
 
-    public IEnumerator verifyGrid(Vector2Int startPosition, Vector2Int offset, Vector2Int secondOffset, BlockColors[,] chosenPattern)
+    public IEnumerator verifyGrid(Vector2Int startPosition, Vector2Int offset, Vector2Int secondOffset, Pattern chosenPattern)
     {
 
         
@@ -63,15 +64,15 @@ public class BlockGrid : MonoBehaviour
                         Vector2Int currentPosition = x * offset + y * secondOffset + new Vector2Int(xPattern,yPattern);
                         if (currentPosition.x >= 0 && currentPosition.y >= 0 && currentPosition.x < gridSize.x && currentPosition.y < gridSize.y)
                         {
-                            if ((grid[currentPosition.x, currentPosition.y] != chosenPattern[xPattern, yPattern] && chosenPattern[xPattern, yPattern] != BlockColors.Uninitialized) || tempGrid[currentPosition.x, currentPosition.y] != BlockColors.Uninitialized)
+                            if ((grid[currentPosition.x, currentPosition.y] != chosenPattern.GetAt(xPattern, yPattern) && chosenPattern.GetAt(xPattern, yPattern) != BlockColors.Uninitialized) || tempGrid[currentPosition.x, currentPosition.y] != BlockColors.Uninitialized)
                             {
                                 Debug.Log("Patten failed");
                             }
-                            if (chosenPattern[xPattern, yPattern] != BlockColors.Uninitialized)
+                            if (chosenPattern.GetAt(xPattern, yPattern) != BlockColors.Uninitialized)
                             {
                                 waitTime = 0.1f;
                                 Instantiate(block, new Vector3(block.transform.localScale.x*currentPosition.x,0, block.transform.localScale.x * currentPosition.y), block.transform.rotation, transform).GetComponent<SpriteRenderer>().color = randomColor;
-                                tempGrid[currentPosition.x, currentPosition.y] = chosenPattern[xPattern, yPattern];
+                                tempGrid[currentPosition.x, currentPosition.y] = chosenPattern.GetAt(xPattern, yPattern);
                             }
                         }
                     }

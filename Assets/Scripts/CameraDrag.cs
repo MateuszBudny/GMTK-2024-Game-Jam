@@ -2,9 +2,10 @@ using UnityEngine;
 
 public class CameraDrag : MonoBehaviour
 {
-    public float dragSpeed = 1;
+    [SerializeField] private float dragSpeed = 1;
+    [SerializeField] private float zoomSpeed = 1;
     private Vector3 dragOrigin;
-
+    
 
     void Update()
     {
@@ -14,6 +15,8 @@ public class CameraDrag : MonoBehaviour
             return;
         }
 
+        Camera.main.orthographicSize -= zoomSpeed * Input.mouseScrollDelta.y;
+
         if (!Input.GetMouseButton(0)) return;
 
         Vector3 pos = Camera.main.ScreenToViewportPoint(Input.mousePosition - dragOrigin);
@@ -21,5 +24,6 @@ public class CameraDrag : MonoBehaviour
         dragOrigin = Input.mousePosition;
 
         transform.Translate(-move, Space.World);
+        
     }
 }
