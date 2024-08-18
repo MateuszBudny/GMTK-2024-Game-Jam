@@ -72,6 +72,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5663455627681403162}
+  - component: {fileID: 5548912521842668625}
   - component: {fileID: 4232118800427024670}
   - component: {fileID: 6426845649967964140}
   - component: {fileID: 4488650524605819256}
@@ -102,6 +103,19 @@ Transform:
   - {fileID: 7064906178518664095}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &5548912521842668625
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8357018682255685657}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 03fc127473533d74db1d6ab5e88ef5f4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  interactionGiver: {fileID: 0}
 --- !u!95 &4232118800427024670
 Animator:
   serializedVersion: 5
@@ -142,13 +156,13 @@ CharacterController:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Height: 1.8
+  m_Height: 1.3
   m_Radius: 0.4
   m_SlopeLimit: 45
   m_StepOffset: 0.25
   m_SkinWidth: 0.02
   m_MinMoveDistance: 0
-  m_Center: {x: 0, y: 0.93, z: 0}
+  m_Center: {x: 0, y: 0.66, z: 0}
 --- !u!114 &4488650524605819256
 MonoBehaviour:
   m_ObjectHideFlags: 0
