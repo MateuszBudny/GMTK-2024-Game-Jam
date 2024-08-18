@@ -1,8 +1,9 @@
+/*
 using System.Collections;
 using System.Linq;
 using UnityEngine;
 
-public class BlockGrid : MonoBehaviour
+public class PatternVerifier : MonoBehaviour
 {
 
     [SerializeField] public Vector2Int gridSize = new Vector2Int(100,100);
@@ -28,7 +29,8 @@ public class BlockGrid : MonoBehaviour
         {
             for(int j = 0; j < gridSize.y; j++)
             {
-                Instantiate(block, new Vector3(block.transform.localScale.x * i, -1, block.transform.localScale.x * j), block.transform.rotation, transform);
+                GameObject CurrentBlock = Instantiate(block, new Vector3(block.transform.localScale.x * i, -1, block.transform.localScale.x * j), block.transform.rotation, transform);
+                CurrentBlock.GetComponent<SpriteRenderer>().color = new Color(1,1,1,0.5f);
                 grid[i, j] = pattern.GetAt(i%blockSize.x,j%blockSize.y);
                 tempGrid[i, j] = BlockColors.Uninitialized;
             }
@@ -79,7 +81,7 @@ public class BlockGrid : MonoBehaviour
                     
                 }
                 if(waitTime > 0)
-                yield return new WaitForSeconds(waitTime);
+                    yield return new WaitForSeconds(waitTime);
             }
 
         }
@@ -95,3 +97,4 @@ public class BlockGrid : MonoBehaviour
     }
     
 }
+*/

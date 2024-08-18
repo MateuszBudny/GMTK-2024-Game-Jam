@@ -39,14 +39,14 @@ public class PatternEditor : Editor {
         columnStyle.fixedWidth = 65;
 
         var rowStyle = new GUIStyle();
-        rowStyle.fixedHeight = 25;
+        rowStyle.fixedHeight = 50;
 
         var rowHeaderStyle = new GUIStyle();
         rowHeaderStyle.fixedWidth = columnStyle.fixedWidth - 1;
 
         var columnHeaderStyle = new GUIStyle();
-        columnHeaderStyle.fixedWidth = 30;
-        columnHeaderStyle.fixedHeight = 25.5f;
+        columnHeaderStyle.fixedWidth = 60;
+        columnHeaderStyle.fixedHeight = 51f;
 
         var columnLabelStyle = new GUIStyle();
         columnLabelStyle.fixedWidth = rowHeaderStyle.fixedWidth - 6;
@@ -61,7 +61,7 @@ public class PatternEditor : Editor {
         cornerLabelStyle.padding.top = -5;
 
         var rowLabelStyle = new GUIStyle();
-        rowLabelStyle.fixedWidth = 25;
+        rowLabelStyle.fixedWidth = 50;
         rowLabelStyle.alignment = TextAnchor.MiddleRight;
         rowLabelStyle.fontStyle = FontStyle.Bold;
 
@@ -95,17 +95,33 @@ public class PatternEditor : Editor {
 
                 if (x >= 0 && y >= 0)
                 {
-                    EditorGUILayout.BeginHorizontal(rowStyle);
+                    EditorGUILayout.BeginHorizontal();
 
-                    var newColor = (BlockColors)EditorGUILayout.EnumPopup(grid.GetAt(x,y), enumStyle);
-                    if (newColor != grid.GetAt(x,y))
+                    EditorGUILayout.BeginVertical();
+                    EditorGUILayout.BeginHorizontal();
+                    
+                    var newColor1 = (LeafColor)EditorGUILayout.EnumPopup(grid.GetAt(x,y).colors[0], enumStyle);
+                    var newColor2 = (LeafColor)EditorGUILayout.EnumPopup(grid.GetAt(x,y).colors[1], enumStyle);
+
+                    EditorGUILayout.EndHorizontal();
+                    EditorGUILayout.BeginHorizontal();
+                    var newColor3 = (LeafColor)EditorGUILayout.EnumPopup(grid.GetAt(x,y).colors[2], enumStyle);
+                    var newColor4 = (LeafColor)EditorGUILayout.EnumPopup(grid.GetAt(x,y).colors[3], enumStyle);
+                    EditorGUILayout.EndHorizontal();
+                    EditorGUILayout.EndVertical();
+
+                    BlockColors block = new BlockColors(newColor1, newColor2, newColor3, newColor4);
+                    
+                    if (!block.Equals(grid.GetAt(x,y)))
                     {
-                        grid.SetAt(x, y, newColor);
+                        grid.SetAt(x, y, block);
                         EditorUtility.SetDirty(this);
                     }
 
                     EditorGUILayout.EndHorizontal();
+  
                 }
+
             }
 
             EditorGUILayout.EndVertical();
