@@ -9,6 +9,11 @@ ModelImporter:
       assembly: UnityEngine.CoreModule
       name: Monkey
     second: {fileID: 2100000, guid: 03deb0727e9666f448042c174e4ab09a, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: ciuch
+    second: {fileID: 2100000, guid: e4a36dff01543da459a69d6c1c455223, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0
