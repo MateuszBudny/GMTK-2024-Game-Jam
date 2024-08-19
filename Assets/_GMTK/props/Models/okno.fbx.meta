@@ -3,7 +3,12 @@ guid: d76ad9afc10533749a8031e1cc4579ef
 ModelImporter:
   serializedVersion: 22200
   internalIDToNameTable: []
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: okno
+    second: {fileID: 2100000, guid: 350c1656aac603941865c54d042a1be6, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0
