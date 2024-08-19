@@ -206,6 +206,7 @@ Transform:
   - {fileID: 4738146446645842175}
   - {fileID: 4099901545894450305}
   - {fileID: 8332512500649435035}
+  - {fileID: 4505839184588191581}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &5123259561118010009
@@ -220,6 +221,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3d7feb11876e31b4e9e89ffbf1cd5d20, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  carpetTakeableItemType: {fileID: 11400000, guid: c06f73d9002f5064298b193437293033,
+    type: 2}
+  interactionReceiver: {fileID: 2863102545648513842}
+  isPossibleToPutCarpetInteractionInfoText: '[Q] Put Carpet
+
+    [E] Enter'
+  isNotPossibleToPutCarpetInteractionInfoText: '[E] Enter'
+  carpetSlot: {fileID: 4505839184588191581}
+  carpetInside: {fileID: 0}
 --- !u!114 &2863102545648513842
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -232,7 +242,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b3f4ba60d0a8f1d44bdfe1b46fea5064, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  interactionInfo: '[E] To Enter (TODO)'
+  interactionInfo: '[E] Enter (TODO)'
   infoTextHandler: {fileID: 3058550889567233336}
   interactions:
   - interactionInputAction: {fileID: -2522192968033562506, guid: 4419d82f33d36e848b3ed5af4c8da37e,
@@ -252,12 +262,60 @@ MonoBehaviour:
             m_StringArgument: 
             m_BoolArgument: 0
           m_CallState: 2
+  - interactionInputAction: {fileID: -163625600455606118, guid: 4419d82f33d36e848b3ed5af4c8da37e,
+      type: 3}
+    onInteract:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 5123259561118010009}
+          m_TargetAssemblyTypeName: CarpetRepairStation, Assembly-CSharp
+          m_MethodName: TryToPutCarpet
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
   onStartedToBeTheCurrentInteraction:
     m_PersistentCalls:
       m_Calls: []
   onStoppedToBeTheCurrentInteraction:
     m_PersistentCalls:
       m_Calls: []
+--- !u!1 &2823636625306581415
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4505839184588191581}
+  m_Layer: 0
+  m_Name: CarpetSlot
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4505839184588191581
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2823636625306581415}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0.7071067, y: -0, z: -0, w: 0.7071069}
+  m_LocalPosition: {x: 0, y: 0.617, z: 0.89}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 7259628198489612935}
+  m_LocalEulerAnglesHint: {x: -90, y: 0, z: 0}
 --- !u!1 &5570897176265535498
 GameObject:
   m_ObjectHideFlags: 0
