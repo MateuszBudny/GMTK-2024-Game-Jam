@@ -5,6 +5,7 @@ using System.Linq;
 using NodeCanvas.Tasks.Actions;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class PatternGrid : MonoBehaviour
 {
@@ -21,10 +22,19 @@ public class PatternGrid : MonoBehaviour
     
     private Collider2D collider;
     [HideInInspector] public Grid2D<BlockColors> grid;
-    
+
+
+    private void Awake()
+    {
+        Cursor.lockState = CursorLockMode.None;
+        Cursor.visible = true;
+        startPattern = DrawingBridge.Instance.startPattern;
+        wantedPattern = DrawingBridge.Instance.wantedPattern;
+        
+    }
+
     void Start()
     {
-        carpetRender.gridToRender = grid;
         collider = GetComponent<Collider2D>();
         if (startPattern != null)
         {
@@ -241,8 +251,13 @@ public class PatternGrid : MonoBehaviour
         }
         
         DisableAllRenderers(!Input.GetKey(KeyCode.L));
+
+        if(isFinishedPattern())
+        {
+            DrawingBridge.Instance.EndDrawing(oldGrid.Count);
+            SceneManager.UnloadSceneAsync("PatternCreationRepair");
+        }
         
-        Debug.Log(isFinishedPattern());
     }
 
     public void showAxis(KeyCode code, Vector2Int axis, int axisLen)

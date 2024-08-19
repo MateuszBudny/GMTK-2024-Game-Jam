@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 public class Carpet : MonoBehaviour
@@ -12,6 +13,10 @@ public class Carpet : MonoBehaviour
     [TextArea]
     [SerializeField]
     private string isNotInInventoryInteractionInfo;
+
+    [SerializeField] public Pattern startingPattern;
+    [SerializeField] public Pattern wantedPattern;
+    [SerializeField] public List<Pattern> usablePatterns;
 
     public CarpetRepairStation CarpetRepairStationItIsIn { get; set; }
     public int SellPrice { get; set; } = 5;

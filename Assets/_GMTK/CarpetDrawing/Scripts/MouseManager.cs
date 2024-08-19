@@ -21,7 +21,7 @@ public class MouseManager : MonoBehaviour
     {
         if (Input.GetMouseButtonDown(0))
         {
-            CameraDrag currentCamera = cameraManager.GetCamera(Input.mousePosition);
+            CameraDrag currentCamera = Camera.main.GetComponent<CameraDrag>();
             Physics.Raycast(currentCamera.dragCamera.ScreenToWorldPoint(Input.mousePosition), currentCamera.transform.forward, out var raycastHit);
             Piece piece = raycastHit.collider?.transform.parent.GetComponent<Piece>();
             

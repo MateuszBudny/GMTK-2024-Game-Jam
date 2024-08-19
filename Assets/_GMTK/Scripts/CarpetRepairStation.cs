@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class CarpetRepairStation : MonoBehaviour
 {
@@ -35,6 +36,23 @@ public class CarpetRepairStation : MonoBehaviour
     public void Enter()
     {
         Debug.Log("enter");
+
+        DrawingBridge.Instance.wallet = PlayerWallet.Instance.Money;
+        DrawingBridge.Instance.startPattern = carpetInside.startingPattern;
+        DrawingBridge.Instance.wantedPattern = carpetInside.wantedPattern;
+        DrawingBridge.Instance.usablePatterns = carpetInside.usablePatterns;
+        DrawingBridge.Instance.carpetRepairStation = this;
+        
+        SceneManager.LoadScene("PatternCreationRepair", LoadSceneMode.Additive);
+        SceneManager.SetActiveScene(SceneManager.GetSceneByName("PatternCreationRepair"));
+        
+        
+    }
+
+    public void Exit(int carpetCost)
+    {
+        SceneManager.SetActiveScene(SceneManager.GetSceneByName("Małpkarnia"));
+        Debug.Log("exit");
     }
 
     public void TryToPutCarpet()
