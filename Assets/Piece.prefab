@@ -45,7 +45,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e2d76ce0e78c8b9408ef145f602086a0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  pattern: {fileID: 11400000, guid: dcd986e2d1732a042ad803b7fe363a27, type: 2}
+  pattern: {fileID: 11400000, guid: bdeb3ab96655e7f4db5dd5fc9be611e2, type: 2}
+  patternGrid: {fileID: 0}
 --- !u!65 &7847806744669106339
 BoxCollider:
   m_ObjectHideFlags: 0

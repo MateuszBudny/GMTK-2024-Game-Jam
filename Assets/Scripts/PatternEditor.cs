@@ -33,20 +33,20 @@ public class PatternEditor : Editor {
         tableStyle.margin.left = 32;
 
         var headerColumnStyle = new GUIStyle();
-        headerColumnStyle.fixedWidth = 35;
+        headerColumnStyle.fixedWidth = 70;
 
         var columnStyle = new GUIStyle();
-        columnStyle.fixedWidth = 65;
+        columnStyle.fixedWidth = 130;
 
         var rowStyle = new GUIStyle();
-        rowStyle.fixedHeight = 50;
+        rowStyle.fixedHeight = 100;
 
         var rowHeaderStyle = new GUIStyle();
         rowHeaderStyle.fixedWidth = columnStyle.fixedWidth - 1;
 
         var columnHeaderStyle = new GUIStyle();
         columnHeaderStyle.fixedWidth = 60;
-        columnHeaderStyle.fixedHeight = 51f;
+        columnHeaderStyle.fixedHeight = 42f;
 
         var columnLabelStyle = new GUIStyle();
         columnLabelStyle.fixedWidth = rowHeaderStyle.fixedWidth - 6;
@@ -54,13 +54,14 @@ public class PatternEditor : Editor {
         columnLabelStyle.fontStyle = FontStyle.Bold;
 
         var cornerLabelStyle = new GUIStyle();
-        cornerLabelStyle.fixedWidth = 42;
+        cornerLabelStyle.fixedWidth = 41;
         cornerLabelStyle.alignment = TextAnchor.MiddleRight;
         cornerLabelStyle.fontStyle = FontStyle.BoldAndItalic;
         cornerLabelStyle.fontSize = 14;
         cornerLabelStyle.padding.top = -5;
 
         var rowLabelStyle = new GUIStyle();
+        rowLabelStyle.padding.top = 20;
         rowLabelStyle.fixedWidth = 50;
         rowLabelStyle.alignment = TextAnchor.MiddleRight;
         rowLabelStyle.fontStyle = FontStyle.Bold;

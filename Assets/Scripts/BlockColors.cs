@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using ParadoxNotion.Design;
 using UnityEngine;
 
@@ -47,7 +48,7 @@ public struct BlockColors : IEquatable<BlockColors>
 
     public bool Equals(BlockColors other)
     {
-        return Equals(colors, other.colors);
+        return Enumerable.SequenceEqual(colors, other.colors);
     }
 
     public override bool Equals(object obj)

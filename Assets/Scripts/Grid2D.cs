@@ -13,7 +13,8 @@ public class Grid2D<T> : ICloneable
     [SerializeField] public Vector2 cellSize;
 
     T[] nonAllocReturnArray = new T[4];
-
+    
+    
     public Grid2D(Vector2Int gridSize, Vector2 position, Vector2 cellSize, T defaultValue = default)
     {
         this.gridSize = gridSize;
@@ -99,13 +100,17 @@ public class Grid2D<T> : ICloneable
 
     public bool IsInsideGrid(Vector2 pos)
     {
-        Vector2 gridPosition = GetGridPosition(pos);
-        if (gridPosition.x < 0 || gridPosition.x < 0)
+        Vector2Int gridPosition = GetGridPosition(pos);
+        return IsInsideGrid(gridPosition);
+    }
+    public bool IsInsideGrid(Vector2Int pos)
+    {
+        if (pos.x < 0 || pos.y < 0)
         {
             return false;
         }
 
-        if (gridPosition.x > gridSize.x || gridPosition.y > gridSize.y)
+        if (pos.x >= gridSize.x || pos.y >= gridSize.y)
         {
             return false;
         }

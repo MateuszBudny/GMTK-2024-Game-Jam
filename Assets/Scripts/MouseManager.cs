@@ -22,13 +22,11 @@ public class MouseManager : MonoBehaviour
         if (Input.GetMouseButtonDown(0))
         {
             CameraDrag currentCamera = cameraManager.GetCamera(Input.mousePosition);
-            Debug.Log(currentCamera.dragCamera.ScreenToWorldPoint(Input.mousePosition) + " " + currentCamera.transform.forward);
             Physics.Raycast(currentCamera.dragCamera.ScreenToWorldPoint(Input.mousePosition), currentCamera.transform.forward, out var raycastHit);
             Piece piece = raycastHit.collider?.transform.parent.GetComponent<Piece>();
             
             if (piece != null)
             {
-                Debug.Log("Piece hit");
                 piece.StartDrag(raycastHit.point);
                 scrollRect.StopMovement();
                 scrollRect.enabled = false;

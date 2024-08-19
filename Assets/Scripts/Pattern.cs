@@ -43,13 +43,11 @@ public class Pattern : ScriptableObject
         {
             for (int j = 0; j < grid.gridSize.y; j++)
             {
-                if (!grid.GetValueAt(i, j).Equals(BlockColors.Uninitialized))
-                {
+                
                     GameObject go = Instantiate(singleBlock, position + new Vector3(i * singleBlock.transform.localScale.x, 0, j * singleBlock.transform.localScale.z), singleBlock.transform.rotation, parent);
-                    go.transform.localScale *= singleBlock.transform.localScale.x / go.transform.lossyScale.x;
                     go.GetComponent<CarpetSquareRenderer>().SetColors(grid.GetValueAt(i, j));
                     objects.Add(new Vector2Int(i,j), go);
-                }
+                
             }
         }
 

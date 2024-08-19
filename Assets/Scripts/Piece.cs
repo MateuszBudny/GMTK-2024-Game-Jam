@@ -29,7 +29,7 @@ public class Piece : MonoBehaviour
         RectTransform parentRect = transform.parent?.GetComponent<RectTransform>();
         if (parentRect != null)
         {
-            parentRect.sizeDelta = new Vector2(pattern.size.x, pattern.size.y) * 100;
+            parentRect.sizeDelta = new Vector2(pattern.size.x, pattern.size.y) * 200;
             
             Vector3[] corners = new Vector3[4];
             parentRect.GetWorldCorners(corners);
@@ -45,17 +45,13 @@ public class Piece : MonoBehaviour
     {
         if (transform.parent != null)
         {
-            Debug.Log(gameObject.transform.lossyScale);
             Piece piece = Instantiate(gameObject, transform.parent).GetComponent<Piece>();
-            Debug.Log(piece.transform.lossyScale);
             foreach (Transform child in piece.transform) {
                 Destroy(child.gameObject);
             }
-
-            float scaleBefore = piece.transform.localScale.z;
-            piece.transform.parent = null;
-            Debug.Log(piece.transform.lossyScale);
             
+            piece.transform.parent = null;
+            piece.transform.localScale *= pattern.singleBlock.transform.localScale.x / piece.transform.lossyScale.x;
             StartCoroutine(piece.FollowMouse((position - transform.position) * 0.14f/piece.transform.localScale.x));
         }
         else
