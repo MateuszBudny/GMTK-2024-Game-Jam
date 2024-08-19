@@ -46,6 +46,11 @@ public class CarpetRepairStation : MonoBehaviour
         carpetInside.transform.parent = carpetSlot;
         carpetInside.transform.SetPositionAndRotation(carpetSlot.position, carpetSlot.rotation);
         carpetInside.GetComponent<Rigidbody>().isKinematic = true;
-        carpetInside.CarpetPutIntoRepairStation();
+        carpetInside.CarpetPutIntoRepairStation(this);
+    }
+
+    public void CarpetRemoved()
+    {
+        carpetInside = null;
     }
 }

@@ -13,6 +13,8 @@ public class Carpet : MonoBehaviour
     [SerializeField]
     private string isNotInInventoryInteractionInfo;
 
+    public CarpetRepairStation CarpetRepairStationItIsIn { get; set; }
+
     public void TryToTakeItem()
     {
         if(!PhysicalInventory.Instance.HasFreeSpace)
@@ -20,6 +22,12 @@ public class Carpet : MonoBehaviour
 
         PhysicalInventory.Instance.AddItem(takeableHandler);
         interactionReceiver.InteractionInfo = isInInventoryInteractionInfo;
+
+        if(CarpetRepairStationItIsIn)
+        {
+            CarpetRepairStationItIsIn.CarpetRemoved();
+            CarpetRepairStationItIsIn = null;
+        }
     }
 
     public void TryToDropItem()
@@ -31,8 +39,9 @@ public class Carpet : MonoBehaviour
         interactionReceiver.InteractionInfo = isNotInInventoryInteractionInfo;
     }
 
-    public void CarpetPutIntoRepairStation()
+    public void CarpetPutIntoRepairStation(CarpetRepairStation repairStation)
     {
-        interactionReceiver.InteractionInfo = "";
+        interactionReceiver.InteractionInfo = isNotInInventoryInteractionInfo;
+        CarpetRepairStationItIsIn = repairStation;
     }
 }
