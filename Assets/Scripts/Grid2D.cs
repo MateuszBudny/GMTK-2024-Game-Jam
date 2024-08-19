@@ -1,10 +1,11 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
 [Serializable]
-public class Grid2D<T> : ICloneable
+public class Grid2D<T> : ICloneable, IEnumerable<Grid2D<T>.GridSpot<T>>
 {
     
     [SerializeField] T[] values;
@@ -146,7 +147,7 @@ public class Grid2D<T> : ICloneable
         {
             for (int j = 0; j < gridSize.y; j++)
             {
-                yield return new GridSpot<T> { value = values[convertIndex(i,j)], gridPosition = new Vector2Int(i, j), worldPosition = GetWorldPosition(new Vector2Int(i, j)) };
+                yield return new GridSpot<T> { value = values[convertIndex(i,j)], gridPosition = new Vector2Int(i, j)};
             }
         }
     }
@@ -160,6 +161,10 @@ public class Grid2D<T> : ICloneable
     {
         public U value;
         public Vector2Int gridPosition;
-        public Vector2 worldPosition;
+    }
+
+    IEnumerator IEnumerable.GetEnumerator()
+    {
+        return GetEnumerator();
     }
 }

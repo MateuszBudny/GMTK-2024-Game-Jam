@@ -12,14 +12,6 @@ public struct BlockColors : IEquatable<BlockColors>
 
     public static BlockColors Uninitialized => new BlockColors(LeafColor.Uninitialized);
     
-    public BlockColors(int c)
-    {
-        colors = new LeafColor[4];
-        colors[0] = (LeafColor)(c & (1 << 8));
-        colors[1] = (LeafColor)((c << 8) & (1 << 8));
-        colors[2] = (LeafColor)((c << 16) & (1 << 8));
-        colors[3] = (LeafColor)((c << 24) & (1 << 8));
-    }
     public BlockColors(LeafColor[] c)
     {
         colors = c;
@@ -33,6 +25,7 @@ public struct BlockColors : IEquatable<BlockColors>
     {
         colors = new LeafColor[] { c1, c1, c1, c1 };
     }
+    
     public static Color LeafColorToColor(LeafColor leaf)
     {
         Dictionary<LeafColor, Color> colors = new Dictionary<LeafColor, Color>

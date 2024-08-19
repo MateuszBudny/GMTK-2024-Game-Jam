@@ -7,10 +7,13 @@ public class CarpetSquareRenderer : MonoBehaviour
     [SerializeField]
     List<Transform> leafs = new List<Transform>();
 
-    public void SetColors(BlockColors block)
+    public void SetColors(BlockColors block, float alpha = 1)
     {
-        for(int i = 0; i < 4; i++){
-            leafs[i].GetComponent<SpriteRenderer>().color = BlockColors.LeafColorToColor(block.colors[i]);    
+        for(int i = 0; i < 4; i++)
+        {
+            Color color = BlockColors.LeafColorToColor(block.colors[i]);
+            color.a *= alpha;
+            leafs[i].GetComponent<SpriteRenderer>().color = color;    
         }
     }
 }

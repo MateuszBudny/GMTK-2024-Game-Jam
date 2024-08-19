@@ -6,7 +6,9 @@ using System.Runtime.InteropServices.WindowsRuntime;
 using Sirenix.Utilities;
 
 [CustomEditor(typeof(Pattern))]
-public class PatternEditor : Editor {
+public class PatternEditor : Editor
+{
+    private string text;
     
     public override void OnInspectorGUI() {
         DrawDefaultInspector();
@@ -126,6 +128,20 @@ public class PatternEditor : Editor {
             }
 
             EditorGUILayout.EndVertical();
+        }
+
+        GUIStyle style = new GUIStyle(EditorStyles.textArea);
+        style.wordWrap = true;
+        
+        string newText = EditorGUILayout.TextArea(text, style);
+        if (newText != text)
+        {
+            grid.pattern = JsonUtility.FromJson<Grid2D<BlockColors>>(newText);
+            if (grid.pattern != null)
+            {
+                grid.size = grid.pattern.gridSize;
+            }
+            text = newText;
         }
 
         EditorGUILayout.EndHorizontal();

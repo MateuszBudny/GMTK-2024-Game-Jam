@@ -1,5 +1,9 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
+using NodeCanvas.Tasks.Actions;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class PatternGrid : MonoBehaviour
@@ -9,15 +13,39 @@ public class PatternGrid : MonoBehaviour
     [SerializeField] public GameObject basePattern;
     
     [SerializeField] private LineRenderer ln; 
-    
-    Stack<Grid2D<BlockColors>> oldGrid = new(); 
+    [SerializeField] private CarpetRender carpetRender; 
+    [SerializeField] private Pattern startPattern;
+    [SerializeField] private Pattern wantedPattern;
+
+    public Stack<Grid2D<BlockColors>> oldGrid = new(); 
     
     private Collider2D collider;
     [HideInInspector] public Grid2D<BlockColors> grid;
+    
     void Start()
     {
+        carpetRender.gridToRender = grid;
         collider = GetComponent<Collider2D>();
-        grid = new Grid2D<BlockColors>(gridSize, transform.position, cellSize, new BlockColors(LeafColor.Uninitialized));
+        if (startPattern != null)
+        {
+            grid = Instantiate(startPattern).pattern;
+        }
+
+        if (grid == null)
+        {
+            grid = new Grid2D<BlockColors>(gridSize, transform.position, cellSize, new BlockColors(LeafColor.Uninitialized));
+        }
+
+        if (startPattern.pattern.gridSize != wantedPattern.pattern.gridSize)
+        {
+            Debug.LogError("Grid size mismatch");
+        }
+        var objects = Pattern.SpawnPattern(wantedPattern.pattern, basePattern, grid.position, null,0.5f);
+        foreach (var obj in objects)
+        {
+            obj.Value.transform.position -= new Vector3(0, 10, 0);
+        }
+        
         Pattern.SpawnPattern(grid, basePattern, grid.position, transform);
     }
 
@@ -93,8 +121,9 @@ public class PatternGrid : MonoBehaviour
         foreach (Transform child in transform) {
             Destroy(child.gameObject);
         }
-
+    
         Pattern.SpawnPattern(grid, basePattern, grid.position, transform);
+        carpetRender.gridToRender = grid;
         
     }
 
@@ -125,51 +154,51 @@ public class PatternGrid : MonoBehaviour
         if (Input.GetKey(KeyCode.A) )
         {
             Vector3 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-            Vector2 gridPosition = grid.GetWorldPosition(grid.GetGridPosition(new Vector2(mousePosition.x, mousePosition.z)));
+            Vector2 gridPosition = grid.GetWorldPosition(grid.GetClosestGridPosition(new Vector2(mousePosition.x, mousePosition.z)));
             
             ln.SetPosition(0,-1000 * new Vector3(0, 0, 1) + new Vector3(gridPosition.x, 0, gridPosition.y) + new Vector3(0,50,0));
             ln.SetPosition(1, 1000 * new Vector3(0, 0, 1) + new Vector3(gridPosition.x, 0, gridPosition.y) + new Vector3(0,50,0));
             if (Input.GetMouseButtonDown(0))
             {
-                MirrorPattern(grid.GetGridPosition(new Vector2(mousePosition.x, mousePosition.z)), new Vector2Int(0, 1));
+                MirrorPattern(grid.GetClosestGridPosition(new Vector2(mousePosition.x, mousePosition.z)), new Vector2Int(0, 1));
             }
         }
         if (Input.GetKey(KeyCode.S) )
         {
             
             Vector3 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-            Vector2 gridPosition = grid.GetWorldPosition(grid.GetGridPosition(new Vector2(mousePosition.x, mousePosition.z)));
+            Vector2 gridPosition = grid.GetWorldPosition(grid.GetClosestGridPosition(new Vector2(mousePosition.x, mousePosition.z)));
             
             ln.SetPosition(0,-1000 * new Vector3(1, 0, 0) + new Vector3(gridPosition.x, 0, gridPosition.y) + new Vector3(0,50,0));
             ln.SetPosition(1, 1000 * new Vector3(1, 0, 0) + new Vector3(gridPosition.x, 0, gridPosition.y) + new Vector3(0,50,0));
             if (Input.GetMouseButtonDown(0))
             {
-                MirrorPattern(grid.GetGridPosition(new Vector2(mousePosition.x, mousePosition.z)), new Vector2Int(1, 0));
+                MirrorPattern(grid.GetClosestGridPosition(new Vector2(mousePosition.x, mousePosition.z)), new Vector2Int(1, 0));
             }
         }
 
         if (Input.GetKey(KeyCode.Z))
         {
             Vector3 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-            Vector2 gridPosition = grid.GetWorldPosition(grid.GetGridPosition(new Vector2(mousePosition.x, mousePosition.z)));
+            Vector2 gridPosition = grid.GetWorldPosition(grid.GetClosestGridPosition(new Vector2(mousePosition.x, mousePosition.z)));
             
             ln.SetPosition(0,-1000 * new Vector3(1, 0, 1) + new Vector3(gridPosition.x, 0, gridPosition.y) + new Vector3(0,50,0));
             ln.SetPosition(1, 1000 * new Vector3(1, 0, 1) + new Vector3(gridPosition.x, 0, gridPosition.y) + new Vector3(0,50,0));
             if (Input.GetMouseButtonDown(0))
             {
-                MirrorPattern(grid.GetGridPosition(new Vector2(mousePosition.x, mousePosition.z)), new Vector2Int(1, 1));
+                MirrorPattern(grid.GetClosestGridPosition(new Vector2(mousePosition.x, mousePosition.z)), new Vector2Int(1, 1));
             }
         }
         if (Input.GetKey(KeyCode.X))
         {
             Vector3 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-            Vector2 gridPosition = grid.GetWorldPosition(grid.GetGridPosition(new Vector2(mousePosition.x, mousePosition.z)));
+            Vector2 gridPosition = grid.GetWorldPosition(grid.GetClosestGridPosition(new Vector2(mousePosition.x, mousePosition.z)));
             
             ln.SetPosition(0,-1000 * new Vector3(-1, 0, 1) + new Vector3(gridPosition.x, 0, gridPosition.y) + new Vector3(0,50,0));
             ln.SetPosition(1, 1000 * new Vector3(-1, 0, 1) + new Vector3(gridPosition.x, 0, gridPosition.y) + new Vector3(0,50,0));
             if (Input.GetMouseButtonDown(0))
             {
-                MirrorPattern(grid.GetGridPosition(new Vector2(mousePosition.x, mousePosition.z)), new Vector2Int(-1, 1));
+                MirrorPattern(grid.GetClosestGridPosition(new Vector2(mousePosition.x, mousePosition.z)), new Vector2Int(-1, 1));
             }
         }
         
@@ -205,6 +234,40 @@ public class PatternGrid : MonoBehaviour
                 }    
             }
             
+        }
+        
+        DisableAllRenderers(!Input.GetKey(KeyCode.L));
+        
+        Debug.Log(isFinishedPattern());
+    }
+
+    public void showAxis(KeyCode code, Vector2Int axis, int axisLen)
+    {
+        if (Input.GetKey(code) )
+        {
+            Vector3 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+            Vector2 gridPosition = grid.GetWorldPosition(grid.GetClosestGridPosition(new Vector2(mousePosition.x, mousePosition.z)));
+            
+            ln.SetPosition(0,-axisLen * new Vector3(axis.x, 0, axis.y) + new Vector3(gridPosition.x, 0, gridPosition.y) + new Vector3(0,50,0));
+            ln.SetPosition(1, (axisLen - 1) * new Vector3(axis.x, 0, axis.y) + new Vector3(gridPosition.x, 0, gridPosition.y) + new Vector3(0,50,0));
+            if (Input.GetMouseButtonDown(0))
+            {
+                MirrorPattern(grid.GetClosestGridPosition(new Vector2(mousePosition.x, mousePosition.z)), axis);
+            }
+        }
+    }
+
+    public bool isFinishedPattern()
+    {
+        return Enumerable.SequenceEqual(wantedPattern.pattern, grid);
+    }
+    
+    public void DisableAllRenderers(bool state) 
+    {
+        var allRenderers = gameObject.GetComponentsInChildren< Renderer >();
+        foreach ( Renderer childRenderer in allRenderers )
+        {
+            childRenderer.enabled = state;
         }
     }
     
