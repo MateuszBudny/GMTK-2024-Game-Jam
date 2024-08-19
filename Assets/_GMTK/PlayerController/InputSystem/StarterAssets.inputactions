@@ -42,9 +42,27 @@
                     "initialStateCheck": false
                 },
                 {
-                    "name": "Interaction",
+                    "name": "PrimaryInteraction",
                     "type": "Button",
                     "id": "a588f4b9-a57a-461d-aa62-988833769742",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "SecondaryInteraction",
+                    "type": "Button",
+                    "id": "14f5503b-e629-4d88-b117-eb6a50adfb0c",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "AdditionalInteraction",
+                    "type": "Button",
+                    "id": "48e2d42d-faed-4c6e-8adc-75b116d53d07",
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": "",
@@ -235,7 +253,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "KeyboardMouse",
-                    "action": "Interaction",
+                    "action": "PrimaryInteraction",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -246,7 +264,51 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "Gamepad",
-                    "action": "Interaction",
+                    "action": "PrimaryInteraction",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "cf811668-d0cd-49cd-9913-e462b1f9ead6",
+                    "path": "<Keyboard>/q",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "KeyboardMouse",
+                    "action": "AdditionalInteraction",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "a869c9ec-825b-4ad5-a855-a65c206e7b78",
+                    "path": "<Gamepad>/leftShoulder",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Gamepad",
+                    "action": "AdditionalInteraction",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "b13b9000-83a3-4c9e-b816-f53890a5740f",
+                    "path": "<Keyboard>/f",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "KeyboardMouse",
+                    "action": "SecondaryInteraction",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "fbe8a7ea-683f-4648-b341-53630da25bfd",
+                    "path": "<Gamepad>/buttonNorth",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Gamepad",
+                    "action": "SecondaryInteraction",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

@@ -17,6 +17,7 @@ public class LoomMachine : MonoBehaviour
     [Header("Bought State")]
     [SerializeField]
     private GameObject boughtVisual;
+    [TextArea]
     [SerializeField]
     private string boughtStateInteractionInfo = "[E] To Weave";
 
@@ -45,7 +46,7 @@ public class LoomMachine : MonoBehaviour
 
     private LoomState state = LoomState.ToBeBought;
 
-    public void OnInteract()
+    public void OnPrimaryInteraction()
     {
         switch(State)
         {
@@ -60,10 +61,25 @@ public class LoomMachine : MonoBehaviour
                     {
                         cantAffordTween.Kill(true);
                     }
-                    cantAffordTween = visualsParent.DOPunchPosition(Vector3.right / 3f, 1f, 10, 0.3f);
+                    cantAffordTween = visualsParent.DOPunchPosition(Vector3.right / 4f, 1f, 10, 0.3f);
                 }
                 break;
             case LoomState.Idle:
+                Debug.Log("weave");
+                break;
+            case LoomState.Looming:
+                break;
+        }
+    }
+
+    public void OnSecondaryInteraction()
+    {
+        switch(State)
+        {
+            case LoomState.ToBeBought:
+                break;
+            case LoomState.Idle:
+                Debug.Log("enter");
                 break;
             case LoomState.Looming:
                 break;

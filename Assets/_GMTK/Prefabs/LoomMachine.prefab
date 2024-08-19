@@ -55,7 +55,9 @@ MonoBehaviour:
   priceToBuy: 10
   notBoughtVisual: {fileID: 2661321178693428295}
   boughtVisual: {fileID: 9160439010233366926}
-  boughtStateInteractionInfo: '[E] To Weave (TODO)'
+  boughtStateInteractionInfo: '[E] To Weave (TODO)
+
+    [F] To Enter (TODO)'
 --- !u!54 &2498485411405009978
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -96,21 +98,41 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   interactionInfo: '[E] To Buy ($10)'
-  onInteract:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 5897694040410530845}
-        m_TargetAssemblyTypeName: LoomMachine, Assembly-CSharp
-        m_MethodName: OnInteract
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+  interactions:
+  - interactionInputAction: {fileID: -2522192968033562506, guid: 4419d82f33d36e848b3ed5af4c8da37e,
+      type: 3}
+    onInteract:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 5897694040410530845}
+          m_TargetAssemblyTypeName: LoomMachine, Assembly-CSharp
+          m_MethodName: OnPrimaryInteraction
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+  - interactionInputAction: {fileID: -5090041954040086762, guid: 4419d82f33d36e848b3ed5af4c8da37e,
+      type: 3}
+    onInteract:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 5897694040410530845}
+          m_TargetAssemblyTypeName: LoomMachine, Assembly-CSharp
+          m_MethodName: OnSecondaryInteraction
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
   onStartedToBeTheCurrentInteraction:
     m_PersistentCalls:
       m_Calls:

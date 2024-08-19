@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class InteractionGiver : MonoBehaviour
 {
@@ -53,11 +54,11 @@ public class InteractionGiver : MonoBehaviour
         }
     }
 
-    public void Interact()
+    public void TryToInteract(InputActionReference actionRef)
     {
         if(!CurrentClosestInteraction)
             return;
 
-        CurrentClosestInteraction.Interact();
+        CurrentClosestInteraction.TryToInteract(actionRef);
     }
 }

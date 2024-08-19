@@ -302,6 +302,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   interactionGiver: {fileID: 4992851029308426433}
+  primaryActionRef: {fileID: -2522192968033562506, guid: 4419d82f33d36e848b3ed5af4c8da37e,
+    type: 3}
+  secondaryActionRef: {fileID: -5090041954040086762, guid: 4419d82f33d36e848b3ed5af4c8da37e,
+    type: 3}
+  additionalActionRef: {fileID: -163625600455606118, guid: 4419d82f33d36e848b3ed5af4c8da37e,
+    type: 3}
 --- !u!95 &4232118800427024670
 Animator:
   serializedVersion: 5
