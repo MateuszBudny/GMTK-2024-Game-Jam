@@ -31,19 +31,23 @@ public class PatternGrid : MonoBehaviour
             grid = Instantiate(startPattern).pattern;
         }
 
-        if (grid == null)
+        if (grid == null || grid.Length == 0)
         {
             grid = new Grid2D<BlockColors>(gridSize, transform.position, cellSize, new BlockColors(LeafColor.Uninitialized));
         }
-
-        if (startPattern.pattern.gridSize != wantedPattern.pattern.gridSize)
+        
+        if (startPattern?.pattern.gridSize != wantedPattern?.pattern.gridSize)
         {
             Debug.LogError("Grid size mismatch");
         }
-        var objects = Pattern.SpawnPattern(wantedPattern.pattern, basePattern, grid.position, null,0.5f);
-        foreach (var obj in objects)
+
+        if (wantedPattern != null)
         {
-            obj.Value.transform.position -= new Vector3(0, 10, 0);
+            var objects = Pattern.SpawnPattern(wantedPattern.pattern, basePattern, grid.position, null, 0.5f);
+            foreach (var obj in objects)
+            {
+                obj.Value.transform.position -= new Vector3(0, 10, 0);
+            }
         }
         
         Pattern.SpawnPattern(grid, basePattern, grid.position, transform);
@@ -259,6 +263,10 @@ public class PatternGrid : MonoBehaviour
 
     public bool isFinishedPattern()
     {
+        if (wantedPattern == null)
+        {
+            return true;
+        }
         return Enumerable.SequenceEqual(wantedPattern.pattern, grid);
     }
     
