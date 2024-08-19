@@ -1,3 +1,4 @@
+using AetherEvents;
 using System;
 using UnityEngine;
 
@@ -17,7 +18,14 @@ public class PlayerWallet : SingleBehaviour<PlayerWallet>
             }
 
             money = value;
+
+            new MoneyChanged(Money).Invoke();
         }
+    }
+
+    private void Start()
+    {
+        new MoneyChanged(Money).Invoke();
     }
 
     public bool CanAfford(int cost) => Money >= cost;

@@ -14,6 +14,7 @@ public class Carpet : MonoBehaviour
     private string isNotInInventoryInteractionInfo;
 
     public CarpetRepairStation CarpetRepairStationItIsIn { get; set; }
+    public int SellPrice { get; set; } = 5;
 
     public void TryToTakeItem()
     {
@@ -43,5 +44,11 @@ public class Carpet : MonoBehaviour
     {
         interactionReceiver.InteractionInfo = isNotInInventoryInteractionInfo;
         CarpetRepairStationItIsIn = repairStation;
+    }
+
+    public void Sell()
+    {
+        PlayerWallet.Instance.Money += SellPrice;
+        Destroy(gameObject);
     }
 }

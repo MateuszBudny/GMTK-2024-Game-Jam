@@ -14,6 +14,8 @@ public class InteractionGiver : MonoBehaviour
 
     private void Update()
     {
+        allCurrentInteractions.RemoveAll(interaction => interaction == null);
+
         if(CurrentClosestInteraction)
         {
             CurrentClosestInteraction.OnStoppedToBeTheCurrentInteraction.Invoke();

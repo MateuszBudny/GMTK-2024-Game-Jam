@@ -13,6 +13,7 @@ public class PhysicalInventory : SingleBehaviour<PhysicalInventory>
 
     public bool HasItem(TakeableItem item) => slots.Any(slot => slot.item == item);
     public bool HasItemOfType(TakeableItemType type) => Items.Any(item => item.Type == type);
+    public TakeableItem PeekItemOfType(TakeableItemType type) => Items.FirstOrDefault(item => item.Type == type);
 
     public void AddItem(TakeableItem item)
     {
