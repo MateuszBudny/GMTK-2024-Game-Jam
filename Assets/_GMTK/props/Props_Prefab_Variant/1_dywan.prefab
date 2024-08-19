@@ -272,6 +272,13 @@ MonoBehaviour:
   interactionReceiver: {fileID: 7686685194158966656}
   isInInventoryInteractionInfo: '[Q] Drop'
   isNotInInventoryInteractionInfo: '[E] Take'
+  startingPattern: {fileID: 11400000, guid: 8628c9da2d535304b88ce0789279d362, type: 2}
+  wantedPattern: {fileID: 11400000, guid: c7311e35709866749848e0a62863f7a8, type: 2}
+  usablePatterns:
+  - {fileID: 11400000, guid: dcd986e2d1732a042ad803b7fe363a27, type: 2}
+  - {fileID: 11400000, guid: 72993792864c36c47a75d6862ce4dfa3, type: 2}
+  - {fileID: 11400000, guid: 2d33eae4e2f9c27409a3944a4462033a, type: 2}
+  - {fileID: 11400000, guid: e46ba2da391cc18459fb17626b57e819, type: 2}
 --- !u!114 &2262254499499004107
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -297,6 +304,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b3f4ba60d0a8f1d44bdfe1b46fea5064, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  priority: 0
   interactionInfo: '[E] To Take'
   infoTextHandler: {fileID: 2462900408345026296}
   interactions:
