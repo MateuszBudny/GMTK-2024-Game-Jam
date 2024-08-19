@@ -65,7 +65,7 @@ public class LoomMachine : MonoBehaviour
                 }
                 break;
             case LoomState.Idle:
-                Debug.Log("weave");
+                Debug.Log("enter");
                 break;
             case LoomState.Looming:
                 break;
@@ -79,7 +79,7 @@ public class LoomMachine : MonoBehaviour
             case LoomState.ToBeBought:
                 break;
             case LoomState.Idle:
-                Debug.Log("enter");
+                Debug.Log("weave");
                 break;
             case LoomState.Looming:
                 break;

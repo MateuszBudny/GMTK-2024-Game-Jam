@@ -11,6 +11,8 @@ public class InteractionReceiver : MonoBehaviour
     [SerializeField]
     private string interactionInfo;
     [SerializeField]
+    private InteractionReceiverInfoText infoTextHandler;
+    [SerializeField]
     private List<ActionInteractionRecord> interactions = new List<ActionInteractionRecord>();
     [SerializeField]
     private UnityEvent onStartedToBeTheCurrentInteraction;
@@ -21,6 +23,15 @@ public class InteractionReceiver : MonoBehaviour
     public UnityEvent OnStoppedToBeTheCurrentInteraction => onStoppedToBeTheCurrentInteraction;
 
     public string InteractionInfo { get => interactionInfo; set => interactionInfo = value; }
+
+    private void Awake()
+    {
+        if(infoTextHandler)
+        {
+            onStartedToBeTheCurrentInteraction.AddListener(infoTextHandler.OnStartedBeingTheCurrentInteraction);
+            onStoppedToBeTheCurrentInteraction.AddListener(infoTextHandler.OnStoppedBeingTheCurrentInteraction);
+        }
+    }
 
     public void TryToInteract(InputActionReference actionRef)
     {
