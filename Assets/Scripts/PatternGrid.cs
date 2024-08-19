@@ -7,7 +7,8 @@ public class PatternGrid : MonoBehaviour
     [SerializeField] public Vector2Int gridSize = new (100, 100);
     [SerializeField] public Vector2 cellSize = new (1, 1);
     [SerializeField] public GameObject basePattern;
-
+    
+    [SerializeField] private LineRenderer ln; 
     
     Stack<Grid2D<BlockColors>> oldGrid = new(); 
     
@@ -124,7 +125,10 @@ public class PatternGrid : MonoBehaviour
         if (Input.GetKey(KeyCode.A) )
         {
             Vector3 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-            Debug.Log(grid.GetGridPosition(new Vector2(mousePosition.x, mousePosition.z)));
+            Vector2 gridPosition = grid.GetWorldPosition(grid.GetGridPosition(new Vector2(mousePosition.x, mousePosition.z)));
+            
+            ln.SetPosition(0,-1000 * new Vector3(0, 0, 1) + new Vector3(gridPosition.x, 0, gridPosition.y) + new Vector3(0,50,0));
+            ln.SetPosition(1, 1000 * new Vector3(0, 0, 1) + new Vector3(gridPosition.x, 0, gridPosition.y) + new Vector3(0,50,0));
             if (Input.GetMouseButtonDown(0))
             {
                 MirrorPattern(grid.GetGridPosition(new Vector2(mousePosition.x, mousePosition.z)), new Vector2Int(0, 1));
@@ -132,8 +136,12 @@ public class PatternGrid : MonoBehaviour
         }
         if (Input.GetKey(KeyCode.S) )
         {
+            
             Vector3 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-            Debug.Log(grid.GetGridPosition(new Vector2(mousePosition.x, mousePosition.z)));
+            Vector2 gridPosition = grid.GetWorldPosition(grid.GetGridPosition(new Vector2(mousePosition.x, mousePosition.z)));
+            
+            ln.SetPosition(0,-1000 * new Vector3(1, 0, 0) + new Vector3(gridPosition.x, 0, gridPosition.y) + new Vector3(0,50,0));
+            ln.SetPosition(1, 1000 * new Vector3(1, 0, 0) + new Vector3(gridPosition.x, 0, gridPosition.y) + new Vector3(0,50,0));
             if (Input.GetMouseButtonDown(0))
             {
                 MirrorPattern(grid.GetGridPosition(new Vector2(mousePosition.x, mousePosition.z)), new Vector2Int(1, 0));
@@ -143,7 +151,10 @@ public class PatternGrid : MonoBehaviour
         if (Input.GetKey(KeyCode.Z))
         {
             Vector3 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-            Debug.Log(grid.GetGridPosition(new Vector2(mousePosition.x, mousePosition.z)));
+            Vector2 gridPosition = grid.GetWorldPosition(grid.GetGridPosition(new Vector2(mousePosition.x, mousePosition.z)));
+            
+            ln.SetPosition(0,-1000 * new Vector3(1, 0, 1) + new Vector3(gridPosition.x, 0, gridPosition.y) + new Vector3(0,50,0));
+            ln.SetPosition(1, 1000 * new Vector3(1, 0, 1) + new Vector3(gridPosition.x, 0, gridPosition.y) + new Vector3(0,50,0));
             if (Input.GetMouseButtonDown(0))
             {
                 MirrorPattern(grid.GetGridPosition(new Vector2(mousePosition.x, mousePosition.z)), new Vector2Int(1, 1));
@@ -152,7 +163,10 @@ public class PatternGrid : MonoBehaviour
         if (Input.GetKey(KeyCode.X))
         {
             Vector3 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-            Debug.Log(grid.GetGridPosition(new Vector2(mousePosition.x, mousePosition.z)));
+            Vector2 gridPosition = grid.GetWorldPosition(grid.GetGridPosition(new Vector2(mousePosition.x, mousePosition.z)));
+            
+            ln.SetPosition(0,-1000 * new Vector3(-1, 0, 1) + new Vector3(gridPosition.x, 0, gridPosition.y) + new Vector3(0,50,0));
+            ln.SetPosition(1, 1000 * new Vector3(-1, 0, 1) + new Vector3(gridPosition.x, 0, gridPosition.y) + new Vector3(0,50,0));
             if (Input.GetMouseButtonDown(0))
             {
                 MirrorPattern(grid.GetGridPosition(new Vector2(mousePosition.x, mousePosition.z)), new Vector2Int(-1, 1));
