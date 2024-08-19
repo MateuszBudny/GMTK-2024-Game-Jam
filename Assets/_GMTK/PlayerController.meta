@@ -1,5 +1,9 @@
 fileFormatVersion: 2
+<<<<<<<< HEAD:Assets/_GMTK/PlayerController.meta
 guid: 3e4ae81191cf74240bcaf0055ca5aedd
+========
+guid: f54d1bd14bd3ca042bd867b519fee8cc
+>>>>>>>> pomysl-arka:Assets/TextMesh Pro.meta
 folderAsset: yes
 DefaultImporter:
   externalObjects: {}
