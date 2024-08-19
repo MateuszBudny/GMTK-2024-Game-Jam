@@ -7,7 +7,8 @@ using UnityEngine.InputSystem;
 
 public class InteractionReceiver : MonoBehaviour
 {
-
+    [SerializeField]
+    private int priority = 0;
     [SerializeField]
     private string interactionInfo;
     [SerializeField]
@@ -22,6 +23,7 @@ public class InteractionReceiver : MonoBehaviour
     public UnityEvent OnStartedToBeTheCurrentInteraction => onStartedToBeTheCurrentInteraction;
     public UnityEvent OnStoppedToBeTheCurrentInteraction => onStoppedToBeTheCurrentInteraction;
 
+    public int Priority => priority;
     public string InteractionInfo { get => interactionInfo; set => interactionInfo = value; }
 
     private void Awake()

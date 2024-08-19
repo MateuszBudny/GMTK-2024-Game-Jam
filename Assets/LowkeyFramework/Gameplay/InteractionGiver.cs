@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using TMPro;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -19,7 +20,8 @@ public class InteractionGiver : MonoBehaviour
         }
         if(allCurrentInteractions.Count > 0)
         {
-            CurrentClosestInteraction = allCurrentInteractions.MinBy(interaction => Vector3.SqrMagnitude(interaction.transform.position - transform.position));
+            int highestPrio = allCurrentInteractions.Max(interaction => interaction.Priority);
+            CurrentClosestInteraction = allCurrentInteractions.Where(interaction => interaction.Priority == highestPrio).MinBy(interaction => Vector3.SqrMagnitude(interaction.transform.position - transform.position));
             CurrentClosestInteraction.OnStartedToBeTheCurrentInteraction.Invoke();
         }
         else
