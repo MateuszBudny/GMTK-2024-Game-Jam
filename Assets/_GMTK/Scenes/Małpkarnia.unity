@@ -292,36 +292,6 @@ PrefabInstance:
       propertyPath: m_fontColor32.rgba
       value: 4285651967
       objectReference: {fileID: 0}
-    - target: {fileID: 7384031916779234504, guid: 09197fc85a049fe44a91c5d9e34227a9,
-        type: 3}
-      propertyPath: m_LocalScale.x
-      value: -0.76666
-      objectReference: {fileID: 0}
-    - target: {fileID: 7384031916779234504, guid: 09197fc85a049fe44a91c5d9e34227a9,
-        type: 3}
-      propertyPath: m_LocalScale.y
-      value: 0.76666
-      objectReference: {fileID: 0}
-    - target: {fileID: 7384031916779234504, guid: 09197fc85a049fe44a91c5d9e34227a9,
-        type: 3}
-      propertyPath: m_LocalScale.z
-      value: 0.76666
-      objectReference: {fileID: 0}
-    - target: {fileID: 7384031916779234504, guid: 09197fc85a049fe44a91c5d9e34227a9,
-        type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 0.0035002
-      objectReference: {fileID: 0}
-    - target: {fileID: 7384031916779234504, guid: 09197fc85a049fe44a91c5d9e34227a9,
-        type: 3}
-      propertyPath: m_AnchoredPosition.x
-      value: 0.006767
-      objectReference: {fileID: 0}
-    - target: {fileID: 7384031916779234504, guid: 09197fc85a049fe44a91c5d9e34227a9,
-        type: 3}
-      propertyPath: m_AnchoredPosition.y
-      value: 0.78797
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
