@@ -523,6 +523,8 @@ MonoBehaviour:
   repairInfoTMP: {fileID: 2523851189121105140}
   firstCarpetRepairedDialogue: {fileID: 11400000, guid: d4d52eb05108ff6439bbb86c2a188957,
     type: 2}
+  secondRepairDialogue: {fileID: 11400000, guid: 28d96078ad92dab4a82ef1a668ab0bc2,
+    type: 2}
 --- !u!114 &2863102545648513842
 MonoBehaviour:
   m_ObjectHideFlags: 0

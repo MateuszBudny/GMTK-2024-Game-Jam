@@ -1,5 +1,4 @@
 using AetherEvents;
-using System;
 using UnityEngine;
 
 public class PlayerWallet : SingleBehaviour<PlayerWallet>
@@ -14,10 +13,12 @@ public class PlayerWallet : SingleBehaviour<PlayerWallet>
         {
             if(value < 0)
             {
-                throw new ArgumentOutOfRangeException("You can't have negative money!");
+                money = 0;
             }
-
-            money = value;
+            else
+            {
+                money = value;
+            }
 
             new MoneyChanged(Money).Invoke();
         }

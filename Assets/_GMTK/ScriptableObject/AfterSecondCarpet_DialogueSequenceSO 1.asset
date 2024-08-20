@@ -1,0 +1,47 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f5e25dc2b81dcf54f8aae317dd0933ef, type: 3}
+  m_Name: AfterSecondCarpet_DialogueSequenceSO 1
+  m_EditorClassIdentifier: 
+  <ID>k__BackingField: 8a8df2ca-8d7c-4e80-b0fb-8c543dff3c99
+  dialogues:
+  - actor: {fileID: 11400000, guid: 6cd605b3fd850d041a078a8d48d70225, type: 2}
+    dialogue: Phew! That's it.
+  - actor: {fileID: 11400000, guid: 6cd605b3fd850d041a078a8d48d70225, type: 2}
+    dialogue: Grandpa! Hmm... I mean, master! I'm done!
+  - actor: {fileID: 11400000, guid: 0e6bfe80f5de37147b44e3ac003c907f, type: 2}
+    dialogue: I'm coming, my boy!
+  - actor: {fileID: 11400000, guid: 0e6bfe80f5de37147b44e3ac003c907f, type: 2}
+    dialogue: 'Phew, I can''t jump like I used to. '
+  - actor: {fileID: 11400000, guid: 0e6bfe80f5de37147b44e3ac003c907f, type: 2}
+    dialogue: Let me check your work...
+  - actor: {fileID: 11400000, guid: 0e6bfe80f5de37147b44e3ac003c907f, type: 2}
+    dialogue: Excellent!
+  - actor: {fileID: 11400000, guid: 0e6bfe80f5de37147b44e3ac003c907f, type: 2}
+    dialogue: Now I'll show you how to make a carpet completely from scratch!
+  - actor: {fileID: 11400000, guid: 0e6bfe80f5de37147b44e3ac003c907f, type: 2}
+    dialogue: Let's go to the loom.
+  - actor: {fileID: 11400000, guid: 0e6bfe80f5de37147b44e3ac003c907f, type: 2}
+    dialogue: I put in the spool, align the warps... Oh my!
+  - actor: {fileID: 11400000, guid: 0e6bfe80f5de37147b44e3ac003c907f, type: 2}
+    dialogue: Ah! Good lord! It's broken.
+  - actor: {fileID: 11400000, guid: 0e6bfe80f5de37147b44e3ac003c907f, type: 2}
+    dialogue: This must be dealt with immediately.
+  - actor: {fileID: 11400000, guid: 0e6bfe80f5de37147b44e3ac003c907f, type: 2}
+    dialogue: We need to repair the rest of the carpets and raise money for a new
+      loom.
+  - actor: {fileID: 11400000, guid: 0e6bfe80f5de37147b44e3ac003c907f, type: 2}
+    dialogue: I leave this task to you, Pavlus.
+  - actor: {fileID: 11400000, guid: 0e6bfe80f5de37147b44e3ac003c907f, type: 2}
+    dialogue: I'll go to the carpenter.
+  - actor: {fileID: 11400000, guid: 6cd605b3fd850d041a078a8d48d70225, type: 2}
+    dialogue: Okay, grandpa

@@ -87,6 +87,9 @@ MonoBehaviour:
   notBoughtVisual: {fileID: 1160155852060416905}
   boughtVisual: {fileID: 6063362143798330679}
   boughtStateInteractionInfo: '[E] Enter To Weave'
+  ThanksForPlayingTMP: {fileID: 0}
+  reparingLoomDialogue: {fileID: 11400000, guid: bf7e4c80a14e8bf4fa3f65ba5458ce30,
+    type: 2}
 --- !u!114 &476216654167920388
 MonoBehaviour:
   m_ObjectHideFlags: 0

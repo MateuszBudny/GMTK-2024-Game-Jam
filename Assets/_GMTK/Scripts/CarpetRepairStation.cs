@@ -27,6 +27,8 @@ public class CarpetRepairStation : MonoBehaviour
 
     [SerializeField]
     private DialogueSequenceSO firstCarpetRepairedDialogue;
+    [SerializeField]
+    private DialogueSequenceSO secondRepairDialogue;
 
     public Carpet CarpetInside { get; private set; }
 
@@ -34,7 +36,7 @@ public class CarpetRepairStation : MonoBehaviour
     public bool CanCarpetBeTakenOut => CarpetInside && PhysicalInventory.Instance.HasFreeSpace;
 
     private Tween shakeTween;
-    private bool firstTimeExit = true;
+    private int whichExitIsIt = 0;
 
     private void Awake()
     {
@@ -94,10 +96,14 @@ public class CarpetRepairStation : MonoBehaviour
         repairInfoTMP.text = $"-${carpetCost}";
         Invoke(nameof(ResetRepairInfo), 5f);
 
-        if(firstTimeExit)
+        whichExitIsIt++;
+        if(whichExitIsIt == 1)
         {
-            firstTimeExit = false;
             firstCarpetRepairedDialogue.StartDialogue();
+        }
+        else if(whichExitIsIt == 2)
+        {
+            secondRepairDialogue.StartDialogue();
         }
 
         Debug.Log("exit");
