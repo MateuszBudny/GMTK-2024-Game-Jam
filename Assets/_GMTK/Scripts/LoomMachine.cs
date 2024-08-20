@@ -1,4 +1,5 @@
 using DG.Tweening;
+using TMPro;
 using UnityEngine;
 
 public class LoomMachine : MonoBehaviour
@@ -20,6 +21,8 @@ public class LoomMachine : MonoBehaviour
     [TextArea]
     [SerializeField]
     private string boughtStateInteractionInfo = "[E] To Weave";
+    [SerializeField]
+    private TextMeshPro ThanksForPlayingTMP;
 
     private Tween cantAffordTween;
 
@@ -65,7 +68,8 @@ public class LoomMachine : MonoBehaviour
                 }
                 break;
             case LoomState.Idle:
-                Debug.Log("enter");
+                BlackScreen.Instance.FadeIn(5f);
+                //Invoke(nameof(ShowThanks), 4f);
                 break;
             case LoomState.Looming:
                 break;
@@ -84,6 +88,11 @@ public class LoomMachine : MonoBehaviour
             case LoomState.Looming:
                 break;
         }
+    }
+
+    private void ShowThanks()
+    {
+        ThanksForPlayingTMP.gameObject.SetActive(true);
     }
 
     private void SetVisualsToBought()

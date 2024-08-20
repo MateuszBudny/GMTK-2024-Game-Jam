@@ -1,3 +1,4 @@
+using AetherEvents;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -33,6 +34,14 @@ public class Player : MonoBehaviour
         if(value.isPressed)
         {
             interactionGiver.TryToInteract(additionalActionRef);
+        }
+    }
+
+    public void OnHideDialogue(InputValue value)
+    {
+        if(value.isPressed)
+        {
+            new DialogueFinished().Invoke();
         }
     }
 }

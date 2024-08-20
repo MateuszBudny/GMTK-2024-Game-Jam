@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class Carpet : MonoBehaviour
@@ -13,14 +14,46 @@ public class Carpet : MonoBehaviour
     [TextArea]
     [SerializeField]
     private string isNotInInventoryInteractionInfo;
+    [SerializeField]
+    private MeshRenderer meshRenderer;
+    [SerializeField]
+    private Material repairedMaterial;
+    [SerializeField]
+    private int sellPrice = 15;
 
     [SerializeField] public Pattern startingPattern;
     [SerializeField] public Pattern wantedPattern;
     [SerializeField] public List<Pattern> usablePatterns;
 
+    public TakeableItem TakeableHandler => takeableHandler;
+
     public CarpetRepairStation CarpetRepairStationItIsIn { get; set; }
-    public int SellPrice { get; set; } = 5;
-    public bool IsFinished { get; set; }
+    public int SellPrice => sellPrice;
+    public bool IsFinished
+    {
+        get => isFinished;
+        set
+        {
+            isFinished = value;
+            List<Material> materialsToSet = meshRenderer.materials.ToList();
+            materialsToSet[0] = repairedMaterial;
+            meshRenderer.SetMaterials(materialsToSet);
+        }
+    }
+
+    private bool isFinished;
+
+    public void Interact()
+    {
+        if(PhysicalInventory.Instance.HasItem(takeableHandler))
+        {
+            TryToDropItem();
+        }
+        else
+        {
+            TryToTakeItem();
+        }
+    }
 
     public void TryToTakeItem()
     {
@@ -37,7 +70,7 @@ public class Carpet : MonoBehaviour
         }
     }
 
-    public void TryToDropItem()
+    private void TryToDropItem()
     {
         if(!takeableHandler.IsInAnyInventory)
             return;

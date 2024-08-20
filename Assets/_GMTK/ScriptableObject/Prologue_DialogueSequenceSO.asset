@@ -1,0 +1,54 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f5e25dc2b81dcf54f8aae317dd0933ef, type: 3}
+  m_Name: Prologue_DialogueSequenceSO
+  m_EditorClassIdentifier: 
+  <ID>k__BackingField: 5f4e2ab9-c290-4e41-a320-90d956369d11
+  dialogues:
+  - actor: {fileID: 11400000, guid: 0e6bfe80f5de37147b44e3ac003c907f, type: 2}
+    dialogue: Pavlus?
+  - actor: {fileID: 11400000, guid: 0e6bfe80f5de37147b44e3ac003c907f, type: 2}
+    dialogue: ...
+  - actor: {fileID: 11400000, guid: 0e6bfe80f5de37147b44e3ac003c907f, type: 2}
+    dialogue: PAVLUS!!!
+  - actor: {fileID: 11400000, guid: 0e6bfe80f5de37147b44e3ac003c907f, type: 2}
+    dialogue: Oh! Haha, you fell asleep again.
+  - actor: {fileID: 11400000, guid: 6cd605b3fd850d041a078a8d48d70225, type: 2}
+    dialogue: Huh?
+  - actor: {fileID: 11400000, guid: 0e6bfe80f5de37147b44e3ac003c907f, type: 2}
+    dialogue: Don't sleep or you'll fly away on a carpet plane he he!
+  - actor: {fileID: 11400000, guid: 0e6bfe80f5de37147b44e3ac003c907f, type: 2}
+    dialogue: Oh my old bones...
+  - actor: {fileID: 11400000, guid: 0e6bfe80f5de37147b44e3ac003c907f, type: 2}
+    dialogue: How many carpets do you have left to repair?
+  - actor: {fileID: 11400000, guid: 6cd605b3fd850d041a078a8d48d70225, type: 2}
+    dialogue: Umm... Two.
+  - actor: {fileID: 11400000, guid: 0e6bfe80f5de37147b44e3ac003c907f, type: 2}
+    dialogue: Very well!
+  - actor: {fileID: 11400000, guid: 0e6bfe80f5de37147b44e3ac003c907f, type: 2}
+    dialogue: 'Remember my boy, '
+  - actor: {fileID: 11400000, guid: 0e6bfe80f5de37147b44e3ac003c907f, type: 2}
+    dialogue: harmony and controle!
+  - actor: {fileID: 11400000, guid: 0e6bfe80f5de37147b44e3ac003c907f, type: 2}
+    dialogue: Harmony, because there is peace in ORDER and SYMMETRY.
+  - actor: {fileID: 11400000, guid: 0e6bfe80f5de37147b44e3ac003c907f, type: 2}
+    dialogue: Controle, because every pattern requires THOUGHT and then ACTION.
+  - actor: {fileID: 11400000, guid: 0e6bfe80f5de37147b44e3ac003c907f, type: 2}
+    dialogue: We don't waste materials here!
+  - actor: {fileID: 11400000, guid: 6cd605b3fd850d041a078a8d48d70225, type: 2}
+    dialogue: Yes! Of course! We do not waste!
+  - actor: {fileID: 11400000, guid: 0e6bfe80f5de37147b44e3ac003c907f, type: 2}
+    dialogue: Good. So...
+  - actor: {fileID: 11400000, guid: 0e6bfe80f5de37147b44e3ac003c907f, type: 2}
+    dialogue: keep up the good work!
+  - actor: {fileID: 11400000, guid: 6cd605b3fd850d041a078a8d48d70225, type: 2}
+    dialogue: Yes, master!

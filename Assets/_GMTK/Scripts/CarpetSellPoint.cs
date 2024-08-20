@@ -35,5 +35,7 @@ public class CarpetSellPoint : MonoBehaviour
         lastSellInteractionInfo = $"Last sell:\n+${carpet.SellPrice}";
         interactionReceiver.InteractionInfo = lastSellInteractionInfo;
         carpet.Sell();
+
+        SoundManager.Instance.Play(Audio.Sell);
     }
 }
