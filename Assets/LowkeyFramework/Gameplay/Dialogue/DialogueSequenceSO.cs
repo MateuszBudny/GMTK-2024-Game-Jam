@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [CreateAssetMenu(menuName = "Lowkey Framework/Dialogue/SequenceSO", fileName = "_DialogueSequenceSO")]
-public class DialogueSequenceSO : ScriptableObject
+public class DialogueSequenceSO : ScriptableObjectWithID
 {
     [SerializeField]
     private List<DialogueRecord> dialogues;
@@ -14,6 +14,7 @@ public class DialogueSequenceSO : ScriptableObject
     public void StartDialogue()
     {
         DialogueFinished.AddListener(TryToPlayNextDialogue);
+        DialogueRequested.AddListener(CheckIfOtherDialogueIsPlaying);
         dialoguesQueue = new Queue<DialogueRecord>(dialogues);
 
         TryToPlayNextDialogue(null);
@@ -23,11 +24,25 @@ public class DialogueSequenceSO : ScriptableObject
     {
         if(dialoguesQueue.Count == 0)
         {
-            DialogueFinished.RemoveListener(TryToPlayNextDialogue);
+            StopDialogue();
             return;
         }
 
-        new DialogueRequested(dialoguesQueue.Dequeue()).Invoke();
+        new DialogueRequested(this, dialoguesQueue.Dequeue()).Invoke();
+    }
+
+    private void CheckIfOtherDialogueIsPlaying(DialogueRequested context)
+    {
+        if(context.fromSequence.ID == ID)
+            return;
+
+        StopDialogue();
+    }
+
+    private void StopDialogue()
+    {
+        DialogueFinished.RemoveListener(TryToPlayNextDialogue);
+        DialogueRequested.RemoveListener(CheckIfOtherDialogueIsPlaying);
     }
 }
 
