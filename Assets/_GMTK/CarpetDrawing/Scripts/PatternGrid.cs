@@ -13,6 +13,7 @@ public class PatternGrid : MonoBehaviour
     [SerializeField] private CarpetRender carpetRender;
     [SerializeField] private Pattern startPattern;
     [SerializeField] private Pattern wantedPattern;
+    [SerializeField] private Transform patternFinish;
 
     public Stack<Grid2D<BlockColors>> oldGrid = new();
 
@@ -48,7 +49,7 @@ public class PatternGrid : MonoBehaviour
 
         if(wantedPattern != null)
         {
-            var objects = Pattern.SpawnPattern(wantedPattern.pattern, basePattern, grid.position, null, 0.5f);
+            var objects = Pattern.SpawnPattern(wantedPattern.pattern, basePattern, grid.position, patternFinish, 0.5f);
             foreach(var obj in objects)
             {
                 obj.Value.transform.position -= new Vector3(0, 10, 0);
@@ -60,7 +61,11 @@ public class PatternGrid : MonoBehaviour
 
     public void AddPattern(Vector3 position, Pattern pattern)
     {
-        AddPattern(grid.GetClosestGridPosition(new Vector2(position.x, position.z)), pattern);
+        Vector2Int gridPosition = grid.GetClosestGridPosition(new Vector2(position.x, position.z));
+        if(grid.IsInsideGrid(gridPosition))
+        {
+            AddPattern(gridPosition, pattern);
+        }
     }
 
     public void AddPattern(Vector2Int position, Pattern pattern)
@@ -134,7 +139,6 @@ public class PatternGrid : MonoBehaviour
         }
 
         Pattern.SpawnPattern(grid, basePattern, grid.position, transform);
-        carpetRender.gridToRender = grid;
 
     }
 
@@ -162,6 +166,12 @@ public class PatternGrid : MonoBehaviour
 
     public void Update()
     {
+        if(isFinishedPattern())
+        {
+            DrawingBridge.Instance.EndDrawing(oldGrid.Count);
+            SceneManager.UnloadSceneAsync("PatternCreationRepair");
+        }
+
         if(Input.GetKey(KeyCode.A))
         {
             Vector3 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
@@ -251,11 +261,7 @@ public class PatternGrid : MonoBehaviour
 
         DisableAllRenderers(!Input.GetKey(KeyCode.L));
 
-        if(isFinishedPattern())
-        {
-            DrawingBridge.Instance.EndDrawing(oldGrid.Count);
-            SceneManager.UnloadSceneAsync("PatternCreationRepair");
-        }
+
 
     }
 
