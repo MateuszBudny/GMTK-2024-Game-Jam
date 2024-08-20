@@ -473,6 +473,7 @@ MonoBehaviour:
   carpetRender: {fileID: 0}
   startPattern: {fileID: 11400000, guid: 8628c9da2d535304b88ce0789279d362, type: 2}
   wantedPattern: {fileID: 11400000, guid: c7311e35709866749848e0a62863f7a8, type: 2}
+  patternFinish: {fileID: 685207550}
   grid:
     values: []
     gridSize: {x: 0, y: 0}
@@ -1009,6 +1010,37 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 1246330206}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &685207549
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 685207550}
+  m_Layer: 0
+  m_Name: PatternFinish
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &685207550
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 685207549}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &723314781
 GameObject:
   m_ObjectHideFlags: 0
@@ -3160,3 +3192,4 @@ SceneRoots:
   - {fileID: 1998488075}
   - {fileID: 723314784}
   - {fileID: 853009300}
+  - {fileID: 685207550}

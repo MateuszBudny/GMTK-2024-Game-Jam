@@ -36,7 +36,9 @@ public class CarpetRepairStation : MonoBehaviour
     public void Enter()
     {
         if(!carpetInside)
+        {
             return;
+        }
 
         DrawingBridge.Instance.wallet = PlayerWallet.Instance.Money;
         DrawingBridge.Instance.startPattern = carpetInside.startingPattern;
@@ -47,12 +49,33 @@ public class CarpetRepairStation : MonoBehaviour
         GameplayManager.Instance.PrepareForEnteringCarpetDrawing();
 
         SceneManager.LoadScene("PatternCreationRepair", LoadSceneMode.Additive);
-        SceneManager.SetActiveScene(SceneManager.GetSceneByName("PatternCreationRepair"));
+
+        GameObject[] allObjects = FindObjectsOfType<GameObject>();
+
+        foreach(GameObject a in allObjects)
+        {
+            if(a.name == "EventSystem")
+            {
+                continue;
+            }
+
+            a.SetActive(false);
+        }
     }
 
     public void Exit(int carpetCost)
     {
+
+
         SceneManager.SetActiveScene(SceneManager.GetSceneByName("Małpkarnia"));
+
+        GameObject[] allObjects = FindObjectsOfType<GameObject>(true);
+
+        foreach(GameObject a in allObjects)
+        {
+            a.SetActive(true);
+        }
+
         GameplayManager.Instance.PrepareForExitingCarpetDrawing();
 
         PlayerWallet.Instance.Money -= carpetCost;
@@ -62,7 +85,9 @@ public class CarpetRepairStation : MonoBehaviour
     public void TryToPutCarpet()
     {
         if(!CanCarpetBePutInside)
+        {
             return;
+        }
 
         carpetInside = PhysicalInventory.Instance.TryToTakeItemOfType(carpetTakeableItemType).GetComponent<Carpet>();
         carpetInside.transform.parent = carpetSlot;
