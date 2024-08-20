@@ -23,10 +23,20 @@ public class PatternGrid : MonoBehaviour
 
     private void Awake()
     {
-        CursorManager.Instance.CurrentCursorLockMode = CursorLockMode.None;
-        startPattern = DrawingBridge.Instance.startPattern;
-        wantedPattern = DrawingBridge.Instance.wantedPattern;
+        if(CursorManager.Instance != null)
+        {
 
+            CursorManager.Instance.CurrentCursorLockMode = CursorLockMode.None;
+        }
+        if(DrawingBridge.Instance?.startPattern != null)
+        {
+            startPattern = DrawingBridge.Instance.startPattern;
+
+        }
+        if(DrawingBridge.Instance?.wantedPattern != null)
+        {
+            wantedPattern = DrawingBridge.Instance.wantedPattern;
+        }
     }
 
     void Start()
@@ -49,7 +59,7 @@ public class PatternGrid : MonoBehaviour
 
         if(wantedPattern != null)
         {
-            var objects = Pattern.SpawnPattern(wantedPattern.pattern, basePattern, grid.position, patternFinish, 0.5f);
+            var objects = Pattern.SpawnPattern(wantedPattern.pattern, basePattern, grid.position, patternFinish, 0.2f);
             foreach(var obj in objects)
             {
                 obj.Value.transform.position -= new Vector3(0, 10, 0);
@@ -168,8 +178,12 @@ public class PatternGrid : MonoBehaviour
     {
         if(isFinishedPattern())
         {
-            DrawingBridge.Instance.EndDrawing(oldGrid.Count);
-            SceneManager.UnloadSceneAsync("PatternCreationRepair");
+
+            DrawingBridge.Instance?.EndDrawing(oldGrid.Count);
+            if(SceneManager.GetActiveScene().name == "PatternCreationRepair")
+            {
+                SceneManager.UnloadSceneAsync("PatternCreationRepair");
+            }
         }
 
         if(Input.GetKey(KeyCode.A))
