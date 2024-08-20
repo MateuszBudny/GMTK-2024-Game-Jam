@@ -22,7 +22,7 @@ public class LoomMachine : MonoBehaviour
     [SerializeField]
     private string boughtStateInteractionInfo = "[E] To Weave";
     [SerializeField]
-    private TextMeshPro ThanksForPlayingTMP;
+    private TextMeshProUGUI ThanksForPlayingTMP;
 
     private Tween cantAffordTween;
 
@@ -68,12 +68,19 @@ public class LoomMachine : MonoBehaviour
                 }
                 break;
             case LoomState.Idle:
-                BlackScreen.Instance.FadeIn(5f);
-                //Invoke(nameof(ShowThanks), 4f);
+                BlackScreen.Instance.FadeIn(4f);
+                Invoke(nameof(ShowThanks), 3f);
+                Invoke(nameof(HideThanks), 10f);
                 break;
             case LoomState.Looming:
                 break;
         }
+    }
+
+    private void HideThanks()
+    {
+        ThanksForPlayingTMP.gameObject.SetActive(false);
+        BlackScreen.Instance.FadeOut(4f);
     }
 
     public void OnSecondaryInteraction()
