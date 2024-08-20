@@ -35,23 +35,27 @@ public class CarpetRepairStation : MonoBehaviour
 
     public void Enter()
     {
-        Debug.Log("enter");
+        if(!carpetInside)
+            return;
 
         DrawingBridge.Instance.wallet = PlayerWallet.Instance.Money;
         DrawingBridge.Instance.startPattern = carpetInside.startingPattern;
         DrawingBridge.Instance.wantedPattern = carpetInside.wantedPattern;
         DrawingBridge.Instance.usablePatterns = carpetInside.usablePatterns;
         DrawingBridge.Instance.carpetRepairStation = this;
-        
+
+        GameplayManager.Instance.PrepareForEnteringCarpetDrawing();
+
         SceneManager.LoadScene("PatternCreationRepair", LoadSceneMode.Additive);
         SceneManager.SetActiveScene(SceneManager.GetSceneByName("PatternCreationRepair"));
-        
-        
     }
 
     public void Exit(int carpetCost)
     {
         SceneManager.SetActiveScene(SceneManager.GetSceneByName("Małpkarnia"));
+        GameplayManager.Instance.PrepareForExitingCarpetDrawing();
+
+        PlayerWallet.Instance.Money -= carpetCost;
         Debug.Log("exit");
     }
 
