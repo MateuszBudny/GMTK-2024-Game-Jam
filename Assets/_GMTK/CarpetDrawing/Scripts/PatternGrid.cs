@@ -250,7 +250,7 @@ public class PatternGrid : MonoBehaviour
             DrawingBridge.Instance?.EndDrawing(oldGrid.Count);
             if(SceneManager.GetSceneByName("PatternCreationRepair") != null)
             {
-                //SceneManager.UnloadSceneAsync("PatternCreationRepair");
+                SceneManager.UnloadSceneAsync("PatternCreationRepair");
             }
         }
 
