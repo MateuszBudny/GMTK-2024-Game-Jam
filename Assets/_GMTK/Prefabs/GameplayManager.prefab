@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 616351497017980675}
   - component: {fileID: 3641970031512145935}
   - component: {fileID: 5627208020622993022}
+  - component: {fileID: 8999187670996633116}
   m_Layer: 0
   m_Name: GameplayManager
   m_TagString: Untagged
@@ -63,3 +64,16 @@ MonoBehaviour:
   usablePatterns: []
   wallet: 0
   carpetRepairStation: {fileID: 0}
+--- !u!114 &8999187670996633116
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8336122827784377853}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c4287fe5401592644b80cb95cb1c4465, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  startingCursorLockMode: 1
