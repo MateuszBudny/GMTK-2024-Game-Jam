@@ -16,10 +16,9 @@ public class CarpetRepairStation : MonoBehaviour
     [SerializeField]
     private Transform carpetSlot;
 
-    [SerializeField]
-    private Carpet carpetInside;
+    public Carpet CarpetInside { get; private set; }
 
-    public bool CanCarpetBePutInside => PhysicalInventory.Instance.HasItemOfType(carpetTakeableItemType) && !carpetInside;
+    public bool CanCarpetBePutInside => PhysicalInventory.Instance.HasItemOfType(carpetTakeableItemType) && !CarpetInside;
 
     private void Update()
     {
@@ -35,15 +34,15 @@ public class CarpetRepairStation : MonoBehaviour
 
     public void Enter()
     {
-        if(!carpetInside)
+        if(!CarpetInside)
         {
             return;
         }
 
         DrawingBridge.Instance.wallet = PlayerWallet.Instance.Money;
-        DrawingBridge.Instance.startPattern = carpetInside.startingPattern;
-        DrawingBridge.Instance.wantedPattern = carpetInside.wantedPattern;
-        DrawingBridge.Instance.usablePatterns = carpetInside.usablePatterns;
+        DrawingBridge.Instance.startPattern = CarpetInside.startingPattern;
+        DrawingBridge.Instance.wantedPattern = CarpetInside.wantedPattern;
+        DrawingBridge.Instance.usablePatterns = CarpetInside.usablePatterns;
         DrawingBridge.Instance.carpetRepairStation = this;
 
         GameplayManager.Instance.PrepareForEnteringCarpetDrawing();
@@ -53,13 +52,12 @@ public class CarpetRepairStation : MonoBehaviour
 
     public void Exit(int carpetCost)
     {
-
-
         SceneManager.SetActiveScene(SceneManager.GetSceneByName("Małpkarnia"));
 
         GameplayManager.Instance.PrepareForExitingCarpetDrawing();
 
         PlayerWallet.Instance.Money -= carpetCost;
+        CarpetInside.IsFinished = true;
         Debug.Log("exit");
     }
 
@@ -70,15 +68,15 @@ public class CarpetRepairStation : MonoBehaviour
             return;
         }
 
-        carpetInside = PhysicalInventory.Instance.TryToTakeItemOfType(carpetTakeableItemType).GetComponent<Carpet>();
-        carpetInside.transform.parent = carpetSlot;
-        carpetInside.transform.SetPositionAndRotation(carpetSlot.position, carpetSlot.rotation);
-        carpetInside.GetComponent<Rigidbody>().isKinematic = true;
-        carpetInside.CarpetPutIntoRepairStation(this);
+        CarpetInside = PhysicalInventory.Instance.TryToTakeItemOfType(carpetTakeableItemType).GetComponent<Carpet>();
+        CarpetInside.transform.parent = carpetSlot;
+        CarpetInside.transform.SetPositionAndRotation(carpetSlot.position, carpetSlot.rotation);
+        CarpetInside.GetComponent<Rigidbody>().isKinematic = true;
+        CarpetInside.CarpetPutIntoRepairStation(this);
     }
 
     public void CarpetRemoved()
     {
-        carpetInside = null;
+        CarpetInside = null;
     }
 }

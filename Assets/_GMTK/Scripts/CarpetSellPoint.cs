@@ -10,11 +10,13 @@ public class CarpetSellPoint : MonoBehaviour
     [SerializeField]
     private TakeableItemType carpetItemType;
 
+    private bool CanSell => PhysicalInventory.Instance.HasItemOfType(carpetItemType) && PhysicalInventory.Instance.PeekItemOfType(carpetItemType).GetComponent<Carpet>().IsFinished;
+
     private string lastSellInteractionInfo = "";
 
     public void SetProperInteractionInfo()
     {
-        if(PhysicalInventory.Instance.HasItemOfType(carpetItemType))
+        if(CanSell)
         {
             interactionReceiver.InteractionInfo = $"{canSellInteractionInfo} (${PhysicalInventory.Instance.PeekItemOfType(carpetItemType).GetComponent<Carpet>().SellPrice})";
         }
@@ -26,11 +28,11 @@ public class CarpetSellPoint : MonoBehaviour
 
     public void TryToSellCarpet()
     {
-        if(!PhysicalInventory.Instance.HasItemOfType(carpetItemType))
+        if(!CanSell)
             return;
 
         Carpet carpet = PhysicalInventory.Instance.TryToTakeItemOfType(carpetItemType).GetComponent<Carpet>();
-        lastSellInteractionInfo = $"+${carpet.SellPrice}";
+        lastSellInteractionInfo = $"Last sell:\n+${carpet.SellPrice}";
         interactionReceiver.InteractionInfo = lastSellInteractionInfo;
         carpet.Sell();
     }

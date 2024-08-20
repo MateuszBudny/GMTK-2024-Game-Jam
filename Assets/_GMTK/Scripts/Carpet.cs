@@ -20,6 +20,7 @@ public class Carpet : MonoBehaviour
 
     public CarpetRepairStation CarpetRepairStationItIsIn { get; set; }
     public int SellPrice { get; set; } = 5;
+    public bool IsFinished { get; set; }
 
     public void TryToTakeItem()
     {
