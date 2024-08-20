@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -25,7 +26,7 @@ public class GameplayManager : SingleBehaviour<GameplayManager>
         Scene scene = SceneManager.GetActiveScene();
         scene.GetRootGameObjects(rootObjects);
 
-        rootObjects.ForEach(root => root.SetActive(false));
+        rootObjects.Where(root => root.name != "GameplayManager").ToList().ForEach(root => root.SetActive(false));
     }
 
     public void PrepareForExitingCarpetDrawing()

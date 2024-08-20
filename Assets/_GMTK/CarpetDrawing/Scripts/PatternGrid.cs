@@ -96,6 +96,7 @@ public class PatternGrid : MonoBehaviour
 
         Pattern.SpawnPattern(grid, pattern.singleBlock, grid.position, transform);
 
+        SoundManager.Instance.Play(Audio.SinglePatternPutOnGrid);
     }
 
     public void MirrorPattern(Vector2Int position, Vector2Int axis)
@@ -150,6 +151,8 @@ public class PatternGrid : MonoBehaviour
 
         Pattern.SpawnPattern(grid, basePattern, grid.position, transform);
 
+        SoundManager.Instance.Play(Audio.MultiplyPattern);
+
     }
 
     private BlockColors MirrorSquare(BlockColors square, Vector2Int axis)
@@ -178,7 +181,7 @@ public class PatternGrid : MonoBehaviour
     {
         if(isFinishedPattern())
         {
-
+            SoundManager.Instance.Play(Audio.Success);
             DrawingBridge.Instance?.EndDrawing(oldGrid.Count);
             if(SceneManager.GetSceneByName("PatternCreationRepair") != null)
             {
@@ -252,6 +255,8 @@ public class PatternGrid : MonoBehaviour
             }
 
             Pattern.SpawnPattern(grid, basePattern, grid.position, transform);
+
+            SoundManager.Instance.Play(Audio.RemoveOrRevert);
         }
 
         if(Input.GetKeyDown(KeyCode.M))
@@ -271,6 +276,7 @@ public class PatternGrid : MonoBehaviour
                 }
             }
 
+            SoundManager.Instance.Play(Audio.RemoveOrRevert);
         }
 
         DisableAllRenderers(!Input.GetKey(KeyCode.L));

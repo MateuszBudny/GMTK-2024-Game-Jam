@@ -74,6 +74,8 @@ public class CarpetRepairStation : MonoBehaviour
         GameplayManager.Instance.PrepareForEnteringCarpetDrawing();
 
         SceneManager.LoadScene("PatternCreationRepair", LoadSceneMode.Additive);
+
+        SoundManager.Instance.Play(Audio.EnterStation);
     }
 
     public void Exit(int carpetCost)
@@ -118,6 +120,8 @@ public class CarpetRepairStation : MonoBehaviour
         CarpetInside.transform.SetPositionAndRotation(carpetSlot.position, carpetSlot.rotation);
         CarpetInside.GetComponent<Rigidbody>().isKinematic = true;
         CarpetInside.CarpetPutIntoRepairStation(this);
+
+        SoundManager.Instance.Play(Audio.PutDownOnProperPlace);
     }
 
     public void TryToTakeCarpet()
