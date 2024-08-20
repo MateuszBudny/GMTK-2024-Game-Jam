@@ -15,6 +15,8 @@ public class PatternGrid : MonoBehaviour
     [SerializeField] private Pattern wantedPattern;
     [SerializeField] private Transform patternFinish;
 
+    [SerializeField] public GameObject arrow;
+
     public Stack<Grid2D<BlockColors>> oldGrid = new();
 
     private new Collider2D collider;
@@ -103,39 +105,20 @@ public class PatternGrid : MonoBehaviour
     {
         oldGrid.Push(grid.Clone() as Grid2D<BlockColors>);
         var tempGrid = (Grid2D<BlockColors>)grid.Clone();
+
+        bool axisIsDiagonal = axis == new Vector2Int(1, -1) || axis == new Vector2Int(-1, 1) || axis == new Vector2Int(1, 1) || axis == new Vector2Int(-1, -1);
+
         foreach(var gridSquare in grid)
         {
             if(!gridSquare.value.Equals(BlockColors.Uninitialized))
             {
-                Vector2Int mirrorPosition = (gridSquare.gridPosition - position);
-                if(axis == new Vector2Int(0, 1) || axis == new Vector2Int(0, -1))
+                if(axisIsDiagonal)
                 {
-                    mirrorPosition.x *= -1;
-                    mirrorPosition.x -= 1;
-                    mirrorPosition += position;
+                    HandleDiagonalMirror(position, axis, gridSquare, tempGrid);
                 }
-                else if(axis == new Vector2Int(1, 0) || axis == new Vector2Int(-1, 0))
+                else
                 {
-                    mirrorPosition.y *= -1;
-                    mirrorPosition.y -= 1;
-                    mirrorPosition += position;
-                }
-                if(axis == new Vector2Int(1, 1) || axis == new Vector2Int(-1, -1))
-                {
-                    int delta = mirrorPosition.x - mirrorPosition.y;
-                    mirrorPosition = gridSquare.gridPosition + delta * new Vector2Int(-1, 1);
-                }
-                else if(axis == new Vector2Int(1, -1) || axis == new Vector2Int(-1, 1))
-                {
-                    int delta = -(mirrorPosition.y + mirrorPosition.x) - 1;
-
-                    mirrorPosition = gridSquare.gridPosition + delta * new Vector2Int(1, 1);
-                }
-
-                if(grid.IsInsideGrid(mirrorPosition))
-                {
-                    BlockColors newValue = BlockColors.Add(grid.GetValueAt(mirrorPosition), MirrorSquare(gridSquare.value, axis));
-                    tempGrid.SetValueAt(mirrorPosition, newValue);
+                    HandleStraightMirror(position, axis, gridSquare, tempGrid);
                 }
 
             }
@@ -155,23 +138,102 @@ public class PatternGrid : MonoBehaviour
 
     }
 
+    private void HandleStraightMirror(Vector2Int position, Vector2Int axis, Grid2D<BlockColors>.GridSpot<BlockColors> gridSquare, Grid2D<BlockColors> tempGrid)
+    {
+        int delta = Mathf.FloorToInt(Vector2.Dot(position - gridSquare.gridPosition, axis));
+        Vector2Int mirrorPosition = gridSquare.gridPosition + axis * (2 * delta - ((axis.x > 0 || axis.y > 0) ? 1 : -1));
+
+        if(grid.IsInsideGrid(mirrorPosition))
+        {
+
+            BlockColors newValue = BlockColors.Add(grid.GetValueAt(mirrorPosition), MirrorSquare(gridSquare.value, axis));
+
+            tempGrid.SetValueAt(mirrorPosition, newValue);
+
+        }
+    }
+
+    private void HandleDiagonalMirror(Vector2Int position, Vector2Int axis, Grid2D<BlockColors>.GridSpot<BlockColors> gridSquare, Grid2D<BlockColors> tempGrid)
+    {
+        int delta = FindClosestDistance(position, gridSquare.gridPosition, axis);
+        for(int i = -100; i < 100; i++)
+        {
+            int potentialDelta = ManhattanDistance((position + i * new Vector2Int(axis.y, -axis.x)), gridSquare.gridPosition);
+            delta = Mathf.Min(delta, potentialDelta);
+        }
+
+        Vector2Int mirrorPosition = gridSquare.gridPosition + axis * (delta + ((axis.x * axis.y > 0) ? (axis.x > 0 ? -1 : 1) : 0));
+        if(delta == 1 && (axis.x * axis.y > 0) && axis.x < 0 && FindClosestDistance(position, gridSquare.gridPosition + new Vector2Int(2, 0), axis) == 1)
+        {
+            mirrorPosition = gridSquare.gridPosition;
+        }
+
+
+        if(grid.IsInsideGrid(mirrorPosition))
+        {
+            BlockColors newValue = gridSquare.value;
+            if(mirrorPosition == gridSquare.gridPosition)
+            {
+                newValue = BlockColors.Add(grid.GetValueAt(mirrorPosition), MirrorSquareAxisThroughSquare(gridSquare.value, axis));
+                tempGrid.SetValueAt(mirrorPosition, newValue);
+
+            }
+            else
+            {
+                float value = Vector2.Dot(mirrorPosition - position, axis);
+                float value2 = Vector2.Dot(gridSquare.gridPosition - position, axis);
+                if((value >= 0 && value2 < 0) || (value > 0 && value2 <= 0))
+                {
+                    newValue = BlockColors.Add(grid.GetValueAt(mirrorPosition), MirrorSquare(gridSquare.value, axis));
+                    tempGrid.SetValueAt(mirrorPosition, newValue);
+                }
+            }
+        }
+    }
+
     private BlockColors MirrorSquare(BlockColors square, Vector2Int axis)
     {
         if(axis == new Vector2Int(0, 1) || axis == new Vector2Int(0, -1))
         {
-            return new BlockColors(square.colors[2], square.colors[1], square.colors[0], square.colors[3]);
+            return new BlockColors(square.colors[0], square.colors[3], square.colors[2], square.colors[1]);
+
+
         }
         else if(axis == new Vector2Int(1, 0) || axis == new Vector2Int(-1, 0))
         {
-            return new BlockColors(square.colors[0], square.colors[3], square.colors[2], square.colors[1]);
+            return new BlockColors(square.colors[2], square.colors[1], square.colors[0], square.colors[3]);
+
         }
         else if(axis == new Vector2Int(1, 1) || axis == new Vector2Int(-1, -1))
         {
-            return new BlockColors(square.colors[1], square.colors[0], square.colors[3], square.colors[2]);
+            return new BlockColors(square.colors[3], square.colors[2], square.colors[1], square.colors[0]);
         }
         else if(axis == new Vector2Int(-1, 1) || axis == new Vector2Int(1, -1))
         {
-            return new BlockColors(square.colors[3], square.colors[2], square.colors[1], square.colors[0]);
+
+            return new BlockColors(square.colors[1], square.colors[0], square.colors[3], square.colors[2]);
+        }
+        return square;
+    }
+
+    private BlockColors MirrorSquareAxisThroughSquare(BlockColors square, Vector2Int axis)
+    {
+
+        if(axis == new Vector2Int(1, 1))
+        {
+            return new BlockColors(square.colors[3], square.colors[2], square.colors[2], square.colors[3]);
+        }
+        if(axis == new Vector2Int(-1, -1))
+        {
+            return new BlockColors(square.colors[0], square.colors[1], square.colors[1], square.colors[0]);
+        }
+        if(axis == new Vector2Int(-1, 1))
+        {
+            return new BlockColors(square.colors[0], square.colors[0], square.colors[3], square.colors[3]);
+        }
+        if(axis == new Vector2Int(1, -1))
+        {
+            return new BlockColors(square.colors[1], square.colors[1], square.colors[2], square.colors[2]);
         }
         return square;
     }
@@ -185,60 +247,11 @@ public class PatternGrid : MonoBehaviour
             DrawingBridge.Instance?.EndDrawing(oldGrid.Count);
             if(SceneManager.GetSceneByName("PatternCreationRepair") != null)
             {
-                SceneManager.UnloadSceneAsync("PatternCreationRepair");
+                //SceneManager.UnloadSceneAsync("PatternCreationRepair");
             }
         }
 
-        if(Input.GetKey(KeyCode.A))
-        {
-            Vector3 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-            Vector2 gridPosition = grid.GetWorldPosition(grid.GetClosestGridPosition(new Vector2(mousePosition.x, mousePosition.z)));
-
-            ln.SetPosition(0, -1000 * new Vector3(0, 0, 1) + new Vector3(gridPosition.x, 0, gridPosition.y) + new Vector3(0, 50, 0));
-            ln.SetPosition(1, 1000 * new Vector3(0, 0, 1) + new Vector3(gridPosition.x, 0, gridPosition.y) + new Vector3(0, 50, 0));
-            if(Input.GetMouseButtonDown(0))
-            {
-                MirrorPattern(grid.GetClosestGridPosition(new Vector2(mousePosition.x, mousePosition.z)), new Vector2Int(0, 1));
-            }
-        }
-        if(Input.GetKey(KeyCode.S))
-        {
-
-            Vector3 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-            Vector2 gridPosition = grid.GetWorldPosition(grid.GetClosestGridPosition(new Vector2(mousePosition.x, mousePosition.z)));
-
-            ln.SetPosition(0, -1000 * new Vector3(1, 0, 0) + new Vector3(gridPosition.x, 0, gridPosition.y) + new Vector3(0, 50, 0));
-            ln.SetPosition(1, 1000 * new Vector3(1, 0, 0) + new Vector3(gridPosition.x, 0, gridPosition.y) + new Vector3(0, 50, 0));
-            if(Input.GetMouseButtonDown(0))
-            {
-                MirrorPattern(grid.GetClosestGridPosition(new Vector2(mousePosition.x, mousePosition.z)), new Vector2Int(1, 0));
-            }
-        }
-
-        if(Input.GetKey(KeyCode.Z))
-        {
-            Vector3 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-            Vector2 gridPosition = grid.GetWorldPosition(grid.GetClosestGridPosition(new Vector2(mousePosition.x, mousePosition.z)));
-
-            ln.SetPosition(0, -1000 * new Vector3(1, 0, 1) + new Vector3(gridPosition.x, 0, gridPosition.y) + new Vector3(0, 50, 0));
-            ln.SetPosition(1, 1000 * new Vector3(1, 0, 1) + new Vector3(gridPosition.x, 0, gridPosition.y) + new Vector3(0, 50, 0));
-            if(Input.GetMouseButtonDown(0))
-            {
-                MirrorPattern(grid.GetClosestGridPosition(new Vector2(mousePosition.x, mousePosition.z)), new Vector2Int(1, 1));
-            }
-        }
-        if(Input.GetKey(KeyCode.X))
-        {
-            Vector3 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-            Vector2 gridPosition = grid.GetWorldPosition(grid.GetClosestGridPosition(new Vector2(mousePosition.x, mousePosition.z)));
-
-            ln.SetPosition(0, -1000 * new Vector3(-1, 0, 1) + new Vector3(gridPosition.x, 0, gridPosition.y) + new Vector3(0, 50, 0));
-            ln.SetPosition(1, 1000 * new Vector3(-1, 0, 1) + new Vector3(gridPosition.x, 0, gridPosition.y) + new Vector3(0, 50, 0));
-            if(Input.GetMouseButtonDown(0))
-            {
-                MirrorPattern(grid.GetClosestGridPosition(new Vector2(mousePosition.x, mousePosition.z)), new Vector2Int(-1, 1));
-            }
-        }
+        showAxis();
 
         if(Input.GetKeyDown(KeyCode.R))
         {
@@ -285,15 +298,22 @@ public class PatternGrid : MonoBehaviour
 
     }
 
-    public void showAxis(KeyCode code, Vector2Int axis, int axisLen)
+    public void showAxis()
     {
-        if(Input.GetKey(code))
+
+        Vector2Int axis = new Vector2Int((Input.GetKey(KeyCode.D) ? 1 : 0) - (Input.GetKey(KeyCode.A) ? 1 : 0), (Input.GetKey(KeyCode.W) ? 1 : 0) - (Input.GetKey(KeyCode.S) ? 1 : 0));
+
+        if(axis != Vector2.zero)
         {
             Vector3 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
             Vector2 gridPosition = grid.GetWorldPosition(grid.GetClosestGridPosition(new Vector2(mousePosition.x, mousePosition.z)));
 
-            ln.SetPosition(0, -axisLen * new Vector3(axis.x, 0, axis.y) + new Vector3(gridPosition.x, 0, gridPosition.y) + new Vector3(0, 50, 0));
-            ln.SetPosition(1, (axisLen - 1) * new Vector3(axis.x, 0, axis.y) + new Vector3(gridPosition.x, 0, gridPosition.y) + new Vector3(0, 50, 0));
+            ln.SetPosition(0, -1000 * new Vector3(axis.y, 0, -axis.x) + new Vector3(gridPosition.x, 0, gridPosition.y) + new Vector3(0, 50, 0));
+            ln.SetPosition(1, (1000 - 1) * new Vector3(axis.y, 0, -axis.x) + new Vector3(gridPosition.x, 0, gridPosition.y) + new Vector3(0, 50, 0));
+
+            arrow.transform.rotation = Quaternion.FromToRotation(Vector3.right, -new Vector3(axis.x, 0, axis.y));
+            arrow.transform.position = new Vector3(gridPosition.x, 0, gridPosition.y);
+
             if(Input.GetMouseButtonDown(0))
             {
                 MirrorPattern(grid.GetClosestGridPosition(new Vector2(mousePosition.x, mousePosition.z)), axis);
@@ -317,6 +337,25 @@ public class PatternGrid : MonoBehaviour
         {
             childRenderer.enabled = state;
         }
+    }
+
+    public static int ManhattanDistance(Vector2Int a, Vector2Int b)
+    {
+        checked
+        {
+            return Mathf.Abs(a.x - b.x) + Mathf.Abs(a.y - b.y);
+        }
+    }
+
+    public static int FindClosestDistance(Vector2Int a, Vector2Int b, Vector2Int axis)
+    {
+        int delta = 1000000;
+        for(int i = -100; i < 100; i++)
+        {
+            int potentialDelta = ManhattanDistance((a + i * new Vector2Int(axis.y, -axis.x)), b);
+            delta = Mathf.Min(delta, potentialDelta);
+        }
+        return delta;
     }
 
 }

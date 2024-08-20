@@ -1,8 +1,6 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using ParadoxNotion.Design;
 using UnityEngine;
 
 [Serializable]
@@ -11,7 +9,7 @@ public struct BlockColors : IEquatable<BlockColors>
     public LeafColor[] colors;
 
     public static BlockColors Uninitialized => new BlockColors(LeafColor.Uninitialized);
-    
+
     public BlockColors(LeafColor[] c)
     {
         colors = c;
@@ -25,7 +23,7 @@ public struct BlockColors : IEquatable<BlockColors>
     {
         colors = new LeafColor[] { c1, c1, c1, c1 };
     }
-    
+
     public static Color LeafColorToColor(LeafColor leaf)
     {
         Dictionary<LeafColor, Color> colors = new Dictionary<LeafColor, Color>
@@ -34,6 +32,7 @@ public struct BlockColors : IEquatable<BlockColors>
             { LeafColor.White, Color.white },
             { LeafColor.Red, Color.red },
             { LeafColor.Blue, Color.blue },
+            { LeafColor.Yellow, Color.yellow },
             { LeafColor.Uninitialized, new Color(0,0,0,0) }
         };
         return colors[leaf];
@@ -56,7 +55,7 @@ public struct BlockColors : IEquatable<BlockColors>
 
     public static BlockColors Add(BlockColors lhs, BlockColors rhs)
     {
-        return new BlockColors(rhs.colors[0] == LeafColor.Uninitialized ? lhs.colors[0] : rhs.colors[0], 
+        return new BlockColors(rhs.colors[0] == LeafColor.Uninitialized ? lhs.colors[0] : rhs.colors[0],
             rhs.colors[1] == LeafColor.Uninitialized ? lhs.colors[1] : rhs.colors[1],
             rhs.colors[2] == LeafColor.Uninitialized ? lhs.colors[2] : rhs.colors[2],
         rhs.colors[3] == LeafColor.Uninitialized ? lhs.colors[3] : rhs.colors[3]);
@@ -64,13 +63,14 @@ public struct BlockColors : IEquatable<BlockColors>
 }
 
 
-public enum LeafColor 
+public enum LeafColor
 {
     Uninitialized,
     White,
     Black,
     Red,
     Blue,
+    Yellow,
 }
 
 
