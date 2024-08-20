@@ -180,7 +180,7 @@ public class PatternGrid : MonoBehaviour
         {
 
             DrawingBridge.Instance?.EndDrawing(oldGrid.Count);
-            if(SceneManager.GetActiveScene().name == "PatternCreationRepair")
+            if(SceneManager.GetSceneByName("PatternCreationRepair") != null)
             {
                 SceneManager.UnloadSceneAsync("PatternCreationRepair");
             }
