@@ -23,6 +23,8 @@ public class LoomMachine : MonoBehaviour
     private string boughtStateInteractionInfo = "[E] To Weave";
     [SerializeField]
     private TextMeshProUGUI ThanksForPlayingTMP;
+    [SerializeField]
+    private DialogueSequenceSO reparingLoomDialogue;
 
     private Tween cantAffordTween;
 
@@ -57,6 +59,7 @@ public class LoomMachine : MonoBehaviour
                 if(PlayerWallet.Instance.TryToBuy(priceToBuy))
                 {
                     State = LoomState.FreshlyBought;
+                    reparingLoomDialogue.StartDialogue();
                 }
                 else
                 {
