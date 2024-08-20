@@ -1,3 +1,5 @@
+using DG.Tweening;
+using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -13,18 +15,37 @@ public class CarpetRepairStation : MonoBehaviour
     [TextArea]
     [SerializeField]
     private string isNotPossibleToPutCarpetInteractionInfoText;
+    [TextArea]
+    [SerializeField]
+    private string carpetNeedsToBeTakenOutInteractionInfoText;
     [SerializeField]
     private Transform carpetSlot;
+    [SerializeField]
+    private Transform visualToShake;
+    [SerializeField]
+    private TextMeshPro repairInfoTMP;
 
     public Carpet CarpetInside { get; private set; }
 
     public bool CanCarpetBePutInside => PhysicalInventory.Instance.HasItemOfType(carpetTakeableItemType) && !CarpetInside;
+    public bool CanCarpetBeTakenOut => CarpetInside && PhysicalInventory.Instance.HasFreeSpace;
+
+    private Tween shakeTween;
+
+    private void Awake()
+    {
+        repairInfoTMP.text = "";
+    }
 
     private void Update()
     {
         if(CanCarpetBePutInside)
         {
             interactionReceiver.InteractionInfo = isPossibleToPutCarpetInteractionInfoText;
+        }
+        else if(CanCarpetBeTakenOut)
+        {
+            interactionReceiver.InteractionInfo = $"{carpetNeedsToBeTakenOutInteractionInfoText}\n{isNotPossibleToPutCarpetInteractionInfoText}";
         }
         else
         {
@@ -34,8 +55,13 @@ public class CarpetRepairStation : MonoBehaviour
 
     public void Enter()
     {
-        if(!CarpetInside)
+        if(!CarpetInside || CarpetInside.IsFinished)
         {
+            if(shakeTween != null)
+            {
+                shakeTween.Kill(true);
+            }
+            shakeTween = visualToShake.DOPunchPosition(Vector3.right / 5f, 1f, 8, 0.1f);
             return;
         }
 
@@ -58,21 +84,48 @@ public class CarpetRepairStation : MonoBehaviour
 
         PlayerWallet.Instance.Money -= carpetCost;
         CarpetInside.IsFinished = true;
+
+        repairInfoTMP.text = $"-${carpetCost}";
+        Invoke(nameof(ResetRepairInfo), 5f);
+
         Debug.Log("exit");
+    }
+
+    private void ResetRepairInfo()
+    {
+        repairInfoTMP.text = "";
+    }
+
+    public void TryToDealWithCarpet()
+    {
+        if(CarpetInside)
+        {
+            TryToTakeCarpet();
+        }
+        else
+        {
+            TryToPutCarpet();
+        }
     }
 
     public void TryToPutCarpet()
     {
         if(!CanCarpetBePutInside)
-        {
             return;
-        }
 
         CarpetInside = PhysicalInventory.Instance.TryToTakeItemOfType(carpetTakeableItemType).GetComponent<Carpet>();
         CarpetInside.transform.parent = carpetSlot;
         CarpetInside.transform.SetPositionAndRotation(carpetSlot.position, carpetSlot.rotation);
         CarpetInside.GetComponent<Rigidbody>().isKinematic = true;
         CarpetInside.CarpetPutIntoRepairStation(this);
+    }
+
+    public void TryToTakeCarpet()
+    {
+        if(!CanCarpetBeTakenOut)
+            return;
+
+        CarpetInside.TryToTakeItem();
     }
 
     public void CarpetRemoved()

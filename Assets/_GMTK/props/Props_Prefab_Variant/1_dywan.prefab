@@ -271,7 +271,9 @@ MonoBehaviour:
   takeableHandler: {fileID: 2262254499499004107}
   interactionReceiver: {fileID: 7686685194158966656}
   isInInventoryInteractionInfo: '[Q] Drop'
-  isNotInInventoryInteractionInfo: '[E] Take'
+  isNotInInventoryInteractionInfo: '[Q] Take'
+  meshRenderer: {fileID: 1442386050194642511}
+  repairedMaterial: {fileID: 0}
   startingPattern: {fileID: 11400000, guid: 8628c9da2d535304b88ce0789279d362, type: 2}
   wantedPattern: {fileID: 11400000, guid: c7311e35709866749848e0a62863f7a8, type: 2}
   usablePatterns:
@@ -305,26 +307,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   priority: 0
-  interactionInfo: '[E] To Take'
+  interactionInfo: '[Q] Take'
   infoTextHandler: {fileID: 2462900408345026296}
   interactions:
-  - interactionInputAction: {fileID: -2522192968033562506, guid: 4419d82f33d36e848b3ed5af4c8da37e,
-      type: 3}
-    onInteract:
-      m_PersistentCalls:
-        m_Calls:
-        - m_Target: {fileID: 8633336112666910259}
-          m_TargetAssemblyTypeName: Carpet, Assembly-CSharp
-          m_MethodName: TryToTakeItem
-          m_Mode: 1
-          m_Arguments:
-            m_ObjectArgument: {fileID: 0}
-            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-            m_IntArgument: 0
-            m_FloatArgument: 0
-            m_StringArgument: 
-            m_BoolArgument: 0
-          m_CallState: 2
   - interactionInputAction: {fileID: -163625600455606118, guid: 4419d82f33d36e848b3ed5af4c8da37e,
       type: 3}
     onInteract:
@@ -332,7 +317,7 @@ MonoBehaviour:
         m_Calls:
         - m_Target: {fileID: 8633336112666910259}
           m_TargetAssemblyTypeName: Carpet, Assembly-CSharp
-          m_MethodName: TryToDropItem
+          m_MethodName: Interact
           m_Mode: 1
           m_Arguments:
             m_ObjectArgument: {fileID: 0}
@@ -375,6 +360,12 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!23 &1442386050194642511 stripped
+MeshRenderer:
+  m_CorrespondingSourceObject: {fileID: -7511558181221131132, guid: 54dcbdd0142efb545b22a5b25b9c5871,
+    type: 3}
+  m_PrefabInstance: {fileID: 271895866664946379}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &3810868253323771686
 PrefabInstance:
   m_ObjectHideFlags: 0
