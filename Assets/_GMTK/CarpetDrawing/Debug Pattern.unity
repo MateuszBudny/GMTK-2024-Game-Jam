@@ -132,6 +132,12 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 3589066137985228663, guid: 5e5c229b55c9d6b49a1a1ddfbe400b29,
         type: 3}
+      propertyPath: pattern
+      value: 
+      objectReference: {fileID: 11400000, guid: 4712ac80bcd4fb04cacdfa24e08a8bba,
+        type: 2}
+    - target: {fileID: 3589066137985228663, guid: 5e5c229b55c9d6b49a1a1ddfbe400b29,
+        type: 3}
       propertyPath: patternGrid
       value: 
       objectReference: {fileID: 151484017}
@@ -679,7 +685,7 @@ PrefabInstance:
         type: 3}
       propertyPath: pattern
       value: 
-      objectReference: {fileID: 11400000, guid: 2d33eae4e2f9c27409a3944a4462033a,
+      objectReference: {fileID: 11400000, guid: 1b9fbd3bf5c6ba348b54d2b051df136d,
         type: 2}
     - target: {fileID: 3589066137985228663, guid: 5e5c229b55c9d6b49a1a1ddfbe400b29,
         type: 3}
@@ -773,7 +779,7 @@ PrefabInstance:
         type: 3}
       propertyPath: pattern
       value: 
-      objectReference: {fileID: 11400000, guid: 72993792864c36c47a75d6862ce4dfa3,
+      objectReference: {fileID: 11400000, guid: 72da0aad94082ff4f9cc98b6123f6f9b,
         type: 2}
     - target: {fileID: 3589066137985228663, guid: 5e5c229b55c9d6b49a1a1ddfbe400b29,
         type: 3}
@@ -867,7 +873,7 @@ PrefabInstance:
         type: 3}
       propertyPath: pattern
       value: 
-      objectReference: {fileID: 11400000, guid: 72993792864c36c47a75d6862ce4dfa3,
+      objectReference: {fileID: 11400000, guid: 326bfcdc54654884eadec3dd7a163315,
         type: 2}
     - target: {fileID: 3589066137985228663, guid: 5e5c229b55c9d6b49a1a1ddfbe400b29,
         type: 3}
@@ -1425,7 +1431,7 @@ Transform:
   m_GameObject: {fileID: 961064467}
   serializedVersion: 2
   m_LocalRotation: {x: 0.7071068, y: -0, z: -0, w: 0.7071068}
-  m_LocalPosition: {x: 0, y: 100, z: -10}
+  m_LocalPosition: {x: 10, y: 100, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -1505,7 +1511,7 @@ PrefabInstance:
         type: 3}
       propertyPath: pattern
       value: 
-      objectReference: {fileID: 11400000, guid: e46ba2da391cc18459fb17626b57e819,
+      objectReference: {fileID: 11400000, guid: 877c219be5f8cdb45b7d38ee1dc46861,
         type: 2}
     - target: {fileID: 3589066137985228663, guid: 5e5c229b55c9d6b49a1a1ddfbe400b29,
         type: 3}
@@ -1595,6 +1601,12 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 45711097}
     m_Modifications:
+    - target: {fileID: 3589066137985228663, guid: 5e5c229b55c9d6b49a1a1ddfbe400b29,
+        type: 3}
+      propertyPath: pattern
+      value: 
+      objectReference: {fileID: 11400000, guid: 0c7eba9661a1a334c82c082d4f8cce2f,
+        type: 2}
     - target: {fileID: 3589066137985228663, guid: 5e5c229b55c9d6b49a1a1ddfbe400b29,
         type: 3}
       propertyPath: patternGrid
@@ -1723,7 +1735,7 @@ PrefabInstance:
         type: 3}
       propertyPath: pattern
       value: 
-      objectReference: {fileID: 11400000, guid: d4b86f09c21a1254385473de443558bf,
+      objectReference: {fileID: 11400000, guid: 6cf2b292e1e7c2947b667d72e5e53418,
         type: 2}
     - target: {fileID: 3589066137985228663, guid: 5e5c229b55c9d6b49a1a1ddfbe400b29,
         type: 3}
@@ -1855,6 +1867,12 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1771411761}
     m_Modifications:
+    - target: {fileID: 3589066137985228663, guid: 5e5c229b55c9d6b49a1a1ddfbe400b29,
+        type: 3}
+      propertyPath: pattern
+      value: 
+      objectReference: {fileID: 11400000, guid: 7e381907ff5ceb64c9c9d33c00bfc36f,
+        type: 2}
     - target: {fileID: 3589066137985228663, guid: 5e5c229b55c9d6b49a1a1ddfbe400b29,
         type: 3}
       propertyPath: patternGrid
@@ -2316,7 +2334,7 @@ PrefabInstance:
         type: 3}
       propertyPath: pattern
       value: 
-      objectReference: {fileID: 11400000, guid: 72993792864c36c47a75d6862ce4dfa3,
+      objectReference: {fileID: 11400000, guid: 4a16c9c92340e7a4bb664cbc82f5b6fb,
         type: 2}
     - target: {fileID: 3589066137985228663, guid: 5e5c229b55c9d6b49a1a1ddfbe400b29,
         type: 3}
@@ -2657,7 +2675,7 @@ PrefabInstance:
         type: 3}
       propertyPath: pattern
       value: 
-      objectReference: {fileID: 11400000, guid: 8628c9da2d535304b88ce0789279d362,
+      objectReference: {fileID: 11400000, guid: d2f72c56fe3c92349b0847b367235bff,
         type: 2}
     - target: {fileID: 3589066137985228663, guid: 5e5c229b55c9d6b49a1a1ddfbe400b29,
         type: 3}
@@ -3125,6 +3143,12 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1858321248}
     m_Modifications:
+    - target: {fileID: 3589066137985228663, guid: 5e5c229b55c9d6b49a1a1ddfbe400b29,
+        type: 3}
+      propertyPath: pattern
+      value: 
+      objectReference: {fileID: 11400000, guid: cf2cc483d60b61345af6b90e7527e36e,
+        type: 2}
     - target: {fileID: 3589066137985228663, guid: 5e5c229b55c9d6b49a1a1ddfbe400b29,
         type: 3}
       propertyPath: patternGrid

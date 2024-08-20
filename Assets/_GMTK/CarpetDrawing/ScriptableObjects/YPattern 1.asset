@@ -1,0 +1,32 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b3ed5bc5a0e0ba64298a5928702f1bbf, type: 3}
+  m_Name: YPattern 1
+  m_EditorClassIdentifier: 
+  serializationData:
+    SerializedFormat: 2
+    SerializedBytes: 
+    ReferencedUnityObjects: []
+    SerializedBytesString: 
+    Prefab: {fileID: 0}
+    PrefabModificationsReferencedUnityObjects: []
+    PrefabModifications: []
+    SerializationNodes: []
+  singleBlock: {fileID: 8883656632505804099, guid: 78f0ecaebeff61d4c8e36315103343e8,
+    type: 3}
+  size: {x: 1, y: 1}
+  pattern:
+    values:
+    - colors: 03000000000000000000000000000000
+    gridSize: {x: 1, y: 1}
+    position: {x: 0, y: 0}
+    cellSize: {x: 1, y: 1}
