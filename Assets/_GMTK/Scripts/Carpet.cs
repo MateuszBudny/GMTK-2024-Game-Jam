@@ -18,6 +18,8 @@ public class Carpet : MonoBehaviour
     private MeshRenderer meshRenderer;
     [SerializeField]
     private Material repairedMaterial;
+    [SerializeField]
+    private int sellPrice = 15;
 
     [SerializeField] public Pattern startingPattern;
     [SerializeField] public Pattern wantedPattern;
@@ -26,7 +28,7 @@ public class Carpet : MonoBehaviour
     public TakeableItem TakeableHandler => takeableHandler;
 
     public CarpetRepairStation CarpetRepairStationItIsIn { get; set; }
-    public int SellPrice { get; set; } = 5;
+    public int SellPrice => sellPrice;
     public bool IsFinished
     {
         get => isFinished;
