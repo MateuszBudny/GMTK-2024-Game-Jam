@@ -61,7 +61,11 @@ public class PatternGrid : MonoBehaviour
 
     public void AddPattern(Vector3 position, Pattern pattern)
     {
-        AddPattern(grid.GetClosestGridPosition(new Vector2(position.x, position.z)), pattern);
+        Vector2Int gridPosition = grid.GetClosestGridPosition(new Vector2(position.x, position.z));
+        if(grid.IsInsideGrid(gridPosition))
+        {
+            AddPattern(gridPosition, pattern);
+        }
     }
 
     public void AddPattern(Vector2Int position, Pattern pattern)
