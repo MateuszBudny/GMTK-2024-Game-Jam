@@ -9,10 +9,13 @@ public class GameplayManager : SingleBehaviour<GameplayManager>
 
     [SerializeField]
     private DialogueSequenceSO prologueDialogue;
+    [SerializeField]
+    private BlackScreen blackScreen;
 
     private void Start()
     {
         prologueDialogue.StartDialogue();
+        blackScreen.FadeOut(5f);
     }
 
     public void PrepareForEnteringCarpetDrawing()

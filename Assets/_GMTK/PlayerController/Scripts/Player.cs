@@ -41,7 +41,6 @@ public class Player : MonoBehaviour
     {
         if(value.isPressed)
         {
-            Debug.Log("dialogue finished");
             new DialogueFinished().Invoke();
         }
     }
