@@ -30,3 +30,4 @@ MonoBehaviour:
     gridSize: {x: 1, y: 1}
     position: {x: 0, y: 0}
     cellSize: {x: 1, y: 1}
+  jsonRepresentation: 

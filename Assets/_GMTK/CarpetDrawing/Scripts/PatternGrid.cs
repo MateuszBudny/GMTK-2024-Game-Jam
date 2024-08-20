@@ -98,7 +98,7 @@ public class PatternGrid : MonoBehaviour
 
         Pattern.SpawnPattern(grid, pattern.singleBlock, grid.position, transform);
 
-        SoundManager.Instance.Play(Audio.SinglePatternPutOnGrid);
+        SoundManager.Instance?.Play(Audio.SinglePatternPutOnGrid);
     }
 
     public void MirrorPattern(Vector2Int position, Vector2Int axis)
@@ -134,7 +134,7 @@ public class PatternGrid : MonoBehaviour
 
         Pattern.SpawnPattern(grid, basePattern, grid.position, transform);
 
-        SoundManager.Instance.Play(Audio.MultiplyPattern);
+        SoundManager.Instance?.Play(Audio.MultiplyPattern);
 
     }
 
@@ -145,11 +145,14 @@ public class PatternGrid : MonoBehaviour
 
         if(grid.IsInsideGrid(mirrorPosition))
         {
+            float value = Vector2.Dot(mirrorPosition - position, axis);
+            float value2 = Vector2.Dot(gridSquare.gridPosition - position, axis);
+            if((value >= 0 && value2 < 0) || (value > 0 && value2 <= 0))
+            {
+                BlockColors newValue = BlockColors.Add(grid.GetValueAt(mirrorPosition), MirrorSquare(gridSquare.value, axis));
 
-            BlockColors newValue = BlockColors.Add(grid.GetValueAt(mirrorPosition), MirrorSquare(gridSquare.value, axis));
-
-            tempGrid.SetValueAt(mirrorPosition, newValue);
-
+                tempGrid.SetValueAt(mirrorPosition, newValue);
+            }
         }
     }
 
@@ -243,7 +246,7 @@ public class PatternGrid : MonoBehaviour
     {
         if(isFinishedPattern())
         {
-            SoundManager.Instance.Play(Audio.Success);
+            SoundManager.Instance?.Play(Audio.Success);
             DrawingBridge.Instance?.EndDrawing(oldGrid.Count);
             if(SceneManager.GetSceneByName("PatternCreationRepair") != null)
             {
@@ -269,7 +272,7 @@ public class PatternGrid : MonoBehaviour
 
             Pattern.SpawnPattern(grid, basePattern, grid.position, transform);
 
-            SoundManager.Instance.Play(Audio.RemoveOrRevert);
+            SoundManager.Instance?.Play(Audio.RemoveOrRevert);
         }
 
         if(Input.GetKeyDown(KeyCode.M))
@@ -289,7 +292,7 @@ public class PatternGrid : MonoBehaviour
                 }
             }
 
-            SoundManager.Instance.Play(Audio.RemoveOrRevert);
+            SoundManager.Instance?.Play(Audio.RemoveOrRevert);
         }
 
         DisableAllRenderers(!Input.GetKey(KeyCode.L));

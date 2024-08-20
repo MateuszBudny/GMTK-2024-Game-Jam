@@ -42,7 +42,7 @@ public class MouseManager : MonoBehaviour
 
             }
 
-            SoundManager.Instance.Play(Audio.Click);
+            SoundManager.Instance?.Play(Audio.Click);
         }
 
         if(Input.GetMouseButtonUp(0))

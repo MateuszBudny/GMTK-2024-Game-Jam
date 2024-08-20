@@ -10,6 +10,8 @@ public class Pattern : SerializedScriptableObject
 
     [SerializeField]
     public Grid2D<BlockColors> pattern = new(Vector2Int.zero, Vector2.zero, Vector2.zero, BlockColors.Uninitialized);
+    [SerializeField]
+    public string jsonRepresentation;
 
     public BlockColors GetAt(int x, int y)
     {

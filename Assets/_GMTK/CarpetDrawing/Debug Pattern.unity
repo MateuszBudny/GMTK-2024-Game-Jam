@@ -471,7 +471,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c77f0e874ab351443aae31a3b104e261, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gridSize: {x: 8, y: 8}
+  gridSize: {x: 4, y: 4}
   cellSize: {x: 1, y: 1}
   basePattern: {fileID: 8883656632505804099, guid: 78f0ecaebeff61d4c8e36315103343e8,
     type: 3}
@@ -2109,7 +2109,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 0.5}
   m_AnchorMax: {x: 1, y: 0.5}
-  m_AnchoredPosition: {x: -100, y: 0}
+  m_AnchoredPosition: {x: -200, y: 0}
   m_SizeDelta: {x: 200, y: 1440}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1860621882
