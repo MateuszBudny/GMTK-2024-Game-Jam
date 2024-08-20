@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f5e25dc2b81dcf54f8aae317dd0933ef, type: 3}
   m_Name: Prologue_DialogueSequenceSO
   m_EditorClassIdentifier: 
+  <ID>k__BackingField: 5f4e2ab9-c290-4e41-a320-90d956369d11
   dialogues:
   - actor: {fileID: 11400000, guid: 0e6bfe80f5de37147b44e3ac003c907f, type: 2}
     dialogue: Pavlus?
