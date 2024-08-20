@@ -49,18 +49,6 @@ public class CarpetRepairStation : MonoBehaviour
         GameplayManager.Instance.PrepareForEnteringCarpetDrawing();
 
         SceneManager.LoadScene("PatternCreationRepair", LoadSceneMode.Additive);
-
-        GameObject[] allObjects = FindObjectsOfType<GameObject>();
-
-        foreach(GameObject a in allObjects)
-        {
-            if(a.name == "EventSystem")
-            {
-                continue;
-            }
-
-            a.SetActive(false);
-        }
     }
 
     public void Exit(int carpetCost)
@@ -68,13 +56,6 @@ public class CarpetRepairStation : MonoBehaviour
 
 
         SceneManager.SetActiveScene(SceneManager.GetSceneByName("Małpkarnia"));
-
-        GameObject[] allObjects = FindObjectsOfType<GameObject>(true);
-
-        foreach(GameObject a in allObjects)
-        {
-            a.SetActive(true);
-        }
 
         GameplayManager.Instance.PrepareForExitingCarpetDrawing();
 
