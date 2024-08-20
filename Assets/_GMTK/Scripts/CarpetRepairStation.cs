@@ -25,12 +25,16 @@ public class CarpetRepairStation : MonoBehaviour
     [SerializeField]
     private TextMeshPro repairInfoTMP;
 
+    [SerializeField]
+    private DialogueSequenceSO firstCarpetRepairedDialogue;
+
     public Carpet CarpetInside { get; private set; }
 
     public bool CanCarpetBePutInside => PhysicalInventory.Instance.HasItemOfType(carpetTakeableItemType) && !CarpetInside;
     public bool CanCarpetBeTakenOut => CarpetInside && PhysicalInventory.Instance.HasFreeSpace;
 
     private Tween shakeTween;
+    private bool firstTimeExit = true;
 
     private void Awake()
     {
@@ -89,6 +93,12 @@ public class CarpetRepairStation : MonoBehaviour
 
         repairInfoTMP.text = $"-${carpetCost}";
         Invoke(nameof(ResetRepairInfo), 5f);
+
+        if(firstTimeExit)
+        {
+            firstTimeExit = false;
+            firstCarpetRepairedDialogue.StartDialogue();
+        }
 
         Debug.Log("exit");
     }

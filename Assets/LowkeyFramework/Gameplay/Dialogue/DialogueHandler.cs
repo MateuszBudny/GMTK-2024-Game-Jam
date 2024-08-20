@@ -29,6 +29,8 @@ public class DialogueHandler : MonoBehaviour
 
     private void TryToPlayDialogue(DialogueRequested context)
     {
+        HideDialogue(null);
+
         if(context.dialogueRecord.actor.ID != actor.ID)
             return;
 

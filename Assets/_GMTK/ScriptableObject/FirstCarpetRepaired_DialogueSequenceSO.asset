@@ -1,0 +1,20 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f5e25dc2b81dcf54f8aae317dd0933ef, type: 3}
+  m_Name: FirstCarpetRepaired_DialogueSequenceSO
+  m_EditorClassIdentifier: 
+  <ID>k__BackingField: 20f80a82-10bb-4da6-9d25-60533be2a583
+  dialogues:
+  - actor: {fileID: 11400000, guid: 6cd605b3fd850d041a078a8d48d70225, type: 2}
+    dialogue: Done!
+  - actor: {fileID: 11400000, guid: 6cd605b3fd850d041a078a8d48d70225, type: 2}
+    dialogue: Now I can take it and sell it at the counter!

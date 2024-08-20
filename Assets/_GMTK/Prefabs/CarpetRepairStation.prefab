@@ -521,6 +521,8 @@ MonoBehaviour:
   carpetSlot: {fileID: 4505839184588191581}
   visualToShake: {fileID: 4738146446645842175}
   repairInfoTMP: {fileID: 2523851189121105140}
+  firstCarpetRepairedDialogue: {fileID: 11400000, guid: d4d52eb05108ff6439bbb86c2a188957,
+    type: 2}
 --- !u!114 &2863102545648513842
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -821,7 +823,7 @@ PrefabInstance:
     - target: {fileID: 5701054168691039101, guid: 46970519d2513df4b8499b18cda64338,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0
+      value: -0.311
       objectReference: {fileID: 0}
     - target: {fileID: 5701054168691039101, guid: 46970519d2513df4b8499b18cda64338,
         type: 3}
@@ -851,7 +853,7 @@ PrefabInstance:
     - target: {fileID: 5701054168691039101, guid: 46970519d2513df4b8499b18cda64338,
         type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 0.77
+      value: 0.93
       objectReference: {fileID: 0}
     - target: {fileID: 5701054168691039101, guid: 46970519d2513df4b8499b18cda64338,
         type: 3}
@@ -867,6 +869,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8429606796696031915, guid: 46970519d2513df4b8499b18cda64338,
+        type: 3}
+      propertyPath: m_fontColor32.rgba
+      value: 4285651967
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
