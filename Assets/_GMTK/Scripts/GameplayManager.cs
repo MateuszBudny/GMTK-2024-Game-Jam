@@ -7,6 +7,14 @@ public class GameplayManager : SingleBehaviour<GameplayManager>
     //[SerializeField]
     //private List<GameObject> turnOffOnOpeningCarpetDrawing;
 
+    [SerializeField]
+    private DialogueSequenceSO prologueDialogue;
+
+    private void Start()
+    {
+        prologueDialogue.StartDialogue();
+    }
+
     public void PrepareForEnteringCarpetDrawing()
     {
         //turnOffOnOpeningCarpetDrawing.ForEach(obj => obj.SetActive(false));

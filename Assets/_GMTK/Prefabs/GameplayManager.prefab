@@ -47,7 +47,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bc589332a814e82479654afc4db5e4c4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  turnOffOnOpeningCarpetDrawing: []
+  prologueDialogue: {fileID: 11400000, guid: d94557f8ac02f98458ca0cdff3027a44, type: 2}
 --- !u!114 &3641970031512145935
 MonoBehaviour:
   m_ObjectHideFlags: 0
