@@ -9,17 +9,18 @@ public class PatternGrid : MonoBehaviour
     [SerializeField] public Vector2 cellSize = new(1, 1);
     [SerializeField] public GameObject basePattern;
 
-    [SerializeField] private LineRenderer ln;
-    [SerializeField] private CarpetRender carpetRender;
     [SerializeField] private Pattern startPattern;
     [SerializeField] private Pattern wantedPattern;
     [SerializeField] private Transform patternFinish;
 
+    [SerializeField] private LineRenderer ln;
     [SerializeField] public GameObject arrow;
+
+    [SerializeField] public float wantedPatternOpacity = 0.2f;
+
 
     public Stack<Grid2D<BlockColors>> oldGrid = new();
 
-    private new Collider2D collider;
     [HideInInspector] public Grid2D<BlockColors> grid;
 
 
@@ -27,13 +28,11 @@ public class PatternGrid : MonoBehaviour
     {
         if(CursorManager.Instance != null)
         {
-
             CursorManager.Instance.CurrentCursorLockMode = CursorLockMode.None;
         }
         if(DrawingBridge.Instance?.startPattern != null)
         {
             startPattern = DrawingBridge.Instance.startPattern;
-
         }
         if(DrawingBridge.Instance?.wantedPattern != null)
         {
@@ -43,7 +42,6 @@ public class PatternGrid : MonoBehaviour
 
     void Start()
     {
-        collider = GetComponent<Collider2D>();
         if(startPattern != null)
         {
             grid = Instantiate(startPattern).pattern;
@@ -61,14 +59,14 @@ public class PatternGrid : MonoBehaviour
 
         if(wantedPattern != null)
         {
-            var objects = Pattern.SpawnPattern(wantedPattern.pattern, basePattern, grid.position, patternFinish, 0.2f);
+            var objects = Pattern.SpawnPattern(wantedPattern.pattern, basePattern, grid.position, patternFinish, wantedPatternOpacity);
             foreach(var obj in objects)
             {
                 obj.Value.transform.position -= new Vector3(0, 10, 0);
             }
         }
 
-        Pattern.SpawnPattern(grid, basePattern, grid.position, transform);
+        RedrawGrid(grid);
     }
 
     public void AddPattern(Vector3 position, Pattern pattern)
@@ -91,12 +89,7 @@ public class PatternGrid : MonoBehaviour
                 grid.SetValueAt(position + patternSquare.gridPosition, newBlock);
             }
         }
-        foreach(Transform child in transform)
-        {
-            Destroy(child.gameObject);
-        }
-
-        Pattern.SpawnPattern(grid, pattern.singleBlock, grid.position, transform);
+        RedrawGrid(grid);
 
         SoundManager.Instance?.Play(Audio.SinglePatternPutOnGrid);
     }
@@ -126,13 +119,7 @@ public class PatternGrid : MonoBehaviour
         }
 
         grid = tempGrid;
-
-        foreach(Transform child in transform)
-        {
-            Destroy(child.gameObject);
-        }
-
-        Pattern.SpawnPattern(grid, basePattern, grid.position, transform);
+        RedrawGrid(grid);
 
         SoundManager.Instance?.Play(Audio.MultiplyPattern);
 
@@ -191,49 +178,44 @@ public class PatternGrid : MonoBehaviour
 
     private BlockColors MirrorSquare(BlockColors square, Vector2Int axis)
     {
-        if(axis == new Vector2Int(0, 1) || axis == new Vector2Int(0, -1))
+        switch((axis.x, axis.y))
         {
-            return new BlockColors(square.colors[0], square.colors[3], square.colors[2], square.colors[1]);
-
+            case (0, 1):
+            case (0, -1):
+                return new BlockColors(square.colors[0], square.colors[3], square.colors[2], square.colors[1]);
+            case (1, 0):
+            case (-1, 0):
+                return new BlockColors(square.colors[2], square.colors[1], square.colors[0], square.colors[3]);
+            case (1, 1):
+            case (-1, -1):
+                return new BlockColors(square.colors[3], square.colors[2], square.colors[1], square.colors[0]);
+            case (-1, 1):
+            case (1, -1):
+                return new BlockColors(square.colors[1], square.colors[0], square.colors[3], square.colors[2]);
+            default:
+                Debug.LogError($"Unknown axis passed: {axis}");
+                return square;
 
         }
-        else if(axis == new Vector2Int(1, 0) || axis == new Vector2Int(-1, 0))
-        {
-            return new BlockColors(square.colors[2], square.colors[1], square.colors[0], square.colors[3]);
-
-        }
-        else if(axis == new Vector2Int(1, 1) || axis == new Vector2Int(-1, -1))
-        {
-            return new BlockColors(square.colors[3], square.colors[2], square.colors[1], square.colors[0]);
-        }
-        else if(axis == new Vector2Int(-1, 1) || axis == new Vector2Int(1, -1))
-        {
-
-            return new BlockColors(square.colors[1], square.colors[0], square.colors[3], square.colors[2]);
-        }
-        return square;
     }
 
     private BlockColors MirrorSquareAxisThroughSquare(BlockColors square, Vector2Int axis)
     {
+        switch((axis.x, axis.y))
+        {
+            case (1, 1):
+                return new BlockColors(square.colors[3], square.colors[2], square.colors[2], square.colors[3]);
+            case (-1, -1):
+                return new BlockColors(square.colors[0], square.colors[1], square.colors[1], square.colors[0]);
+            case (-1, 1):
+                return new BlockColors(square.colors[0], square.colors[0], square.colors[3], square.colors[3]);
+            case (1, -1):
+                return new BlockColors(square.colors[1], square.colors[1], square.colors[2], square.colors[2]);
+            default:
+                Debug.LogError($"Unknown axis passed: {axis}");
+                return square;
 
-        if(axis == new Vector2Int(1, 1))
-        {
-            return new BlockColors(square.colors[3], square.colors[2], square.colors[2], square.colors[3]);
         }
-        if(axis == new Vector2Int(-1, -1))
-        {
-            return new BlockColors(square.colors[0], square.colors[1], square.colors[1], square.colors[0]);
-        }
-        if(axis == new Vector2Int(-1, 1))
-        {
-            return new BlockColors(square.colors[0], square.colors[0], square.colors[3], square.colors[3]);
-        }
-        if(axis == new Vector2Int(1, -1))
-        {
-            return new BlockColors(square.colors[1], square.colors[1], square.colors[2], square.colors[2]);
-        }
-        return square;
     }
 
 
@@ -259,13 +241,16 @@ public class PatternGrid : MonoBehaviour
         if(Input.GetKeyDown(KeyCode.O))
         {
             oldGrid = new Stack<Grid2D<BlockColors>>();
-            grid = new Grid2D<BlockColors>(grid.gridSize, grid.position, grid.cellSize, BlockColors.Uninitialized);
-            foreach(Transform child in transform)
+            if(startPattern != null)
             {
-                Destroy(child.gameObject);
+                grid = Instantiate(startPattern).pattern;
+            }
+            else
+            {
+                grid = new Grid2D<BlockColors>(grid.gridSize, grid.position, grid.cellSize, BlockColors.Uninitialized);
             }
 
-            Pattern.SpawnPattern(grid, basePattern, grid.position, transform);
+            RedrawGrid(grid);
 
             SoundManager.Instance?.Play(Audio.RemoveOrRevert);
         }
@@ -278,12 +263,7 @@ public class PatternGrid : MonoBehaviour
                 if(backGrid != null)
                 {
                     grid = backGrid;
-                    foreach(Transform child in transform)
-                    {
-                        Destroy(child.gameObject);
-                    }
-
-                    Pattern.SpawnPattern(grid, basePattern, grid.position, transform);
+                    RedrawGrid(grid);
                 }
             }
 
@@ -292,14 +272,16 @@ public class PatternGrid : MonoBehaviour
 
         DisableAllRenderers(!Input.GetKey(KeyCode.L));
 
-
-
     }
 
     public void showAxis()
     {
 
         Vector2Int axis = new Vector2Int((Input.GetKey(KeyCode.D) ? 1 : 0) - (Input.GetKey(KeyCode.A) ? 1 : 0), (Input.GetKey(KeyCode.W) ? 1 : 0) - (Input.GetKey(KeyCode.S) ? 1 : 0));
+
+        arrow.SetActive(axis != Vector2.zero);
+        ln.enabled = (axis != Vector2.zero);
+
 
         if(axis != Vector2.zero)
         {
@@ -317,8 +299,20 @@ public class PatternGrid : MonoBehaviour
                 MirrorPattern(grid.GetClosestGridPosition(new Vector2(mousePosition.x, mousePosition.z)), axis);
             }
         }
-    }
 
+    }
+    private void RedrawGrid(Grid2D<BlockColors> grid, bool destroyOld = true)
+    {
+        if(destroyOld)
+        {
+            foreach(Transform child in transform)
+            {
+                Destroy(child.gameObject);
+            }
+        }
+
+        Pattern.SpawnPattern(grid, basePattern, grid.position, transform);
+    }
     public bool isFinishedPattern()
     {
         if(wantedPattern == null)
