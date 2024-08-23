@@ -159,11 +159,6 @@ public class PatternGrid : MonoBehaviour
     private void HandleDiagonalMirror(Vector2Int position, Vector2Int axis, Grid2D<BlockColors>.GridSpot<BlockColors> gridSquare, Grid2D<BlockColors> tempGrid)
     {
         int delta = FindClosestDistance(position, gridSquare.gridPosition, axis);
-        for(int i = -100; i < 100; i++)
-        {
-            int potentialDelta = ManhattanDistance((position + i * new Vector2Int(axis.y, -axis.x)), gridSquare.gridPosition);
-            delta = Mathf.Min(delta, potentialDelta);
-        }
 
         Vector2Int mirrorPosition = gridSquare.gridPosition + axis * (delta + ((axis.x * axis.y > 0) ? (axis.x > 0 ? -1 : 1) : 0));
         if(delta == 1 && (axis.x * axis.y > 0) && axis.x < 0 && FindClosestDistance(position, gridSquare.gridPosition + new Vector2Int(2, 0), axis) == 1)
@@ -248,7 +243,7 @@ public class PatternGrid : MonoBehaviour
         {
             SoundManager.Instance?.Play(Audio.Success);
             DrawingBridge.Instance?.EndDrawing(oldGrid.Count);
-            if(SceneManager.GetSceneByName("PatternCreationRepair") != null)
+            if(SceneManager.GetSceneByName("PatternCreationRepair") != null && wantedPattern != null)
             {
                 SceneManager.UnloadSceneAsync("PatternCreationRepair");
             }
@@ -315,7 +310,7 @@ public class PatternGrid : MonoBehaviour
             ln.SetPosition(1, (1000 - 1) * new Vector3(axis.y, 0, -axis.x) + new Vector3(gridPosition.x, 0, gridPosition.y) + new Vector3(0, 50, 0));
 
             arrow.transform.rotation = Quaternion.FromToRotation(Vector3.right, -new Vector3(axis.x, 0, axis.y));
-            arrow.transform.position = new Vector3(gridPosition.x, 0, gridPosition.y);
+            arrow.transform.position = new Vector3(gridPosition.x, 30, gridPosition.y);
 
             if(Input.GetMouseButtonDown(0))
             {

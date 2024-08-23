@@ -30,9 +30,9 @@ public struct BlockColors : IEquatable<BlockColors>
         {
             { LeafColor.Black, Color.black },
             { LeafColor.White, Color.white },
-            { LeafColor.Red, Color.red },
-            { LeafColor.Blue, Color.blue },
-            { LeafColor.Yellow, Color.yellow },
+            { LeafColor.Red,    new Color((float)136 / 255,(float)  0 / 255, (float) 21 / 255)   },
+            { LeafColor.Blue,   new Color((float) 63 / 255,(float) 72 / 255, (float)204 / 255)   },
+            { LeafColor.Yellow, new Color((float)255 / 255,(float)201 / 255, (float) 14 / 255)   },
             { LeafColor.Uninitialized, new Color(0,0,0,0) }
         };
         return colors[leaf];
