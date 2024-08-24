@@ -15,6 +15,8 @@ public class PatternGrid : MonoBehaviour
 
     [SerializeField] private LineRenderer ln;
     [SerializeField] public GameObject arrow;
+    [SerializeField] public CarpetRender carpetRender;
+
 
     [SerializeField] public float wantedPatternOpacity = 0.2f;
 
@@ -145,7 +147,19 @@ public class PatternGrid : MonoBehaviour
 
     private void HandleDiagonalMirror(Vector2Int position, Vector2Int axis, Grid2D<BlockColors>.GridSpot<BlockColors> gridSquare, Grid2D<BlockColors> tempGrid)
     {
+
         int delta = FindClosestDistance(position, gridSquare.gridPosition, axis);
+
+        if(AxisCutsThroughSquare(gridSquare.gridPosition, position, axis))
+        {
+            BlockColors newValue = BlockColors.Add(grid.GetValueAt(gridSquare.gridPosition), MirrorSquareAxisThroughSquare(gridSquare.value, axis));
+            tempGrid.SetValueAt(gridSquare.gridPosition, newValue);
+        }
+
+        if(Vector2.Dot(gridSquare.gridPosition - position, axis) > 0)
+        {
+            return;
+        }
 
         Vector2Int mirrorPosition = gridSquare.gridPosition + axis * (delta + ((axis.x * axis.y > 0) ? (axis.x > 0 ? -1 : 1) : 0));
         if(delta == 1 && (axis.x * axis.y > 0) && axis.x < 0 && FindClosestDistance(position, gridSquare.gridPosition + new Vector2Int(2, 0), axis) == 1)
@@ -153,27 +167,26 @@ public class PatternGrid : MonoBehaviour
             mirrorPosition = gridSquare.gridPosition;
         }
 
-
         if(grid.IsInsideGrid(mirrorPosition))
         {
-            BlockColors newValue = gridSquare.value;
-            if(mirrorPosition == gridSquare.gridPosition)
+            float value = Vector2.Dot(mirrorPosition - position, axis);
+            float value2 = Vector2.Dot(gridSquare.gridPosition - position, axis);
+            if((value >= 0 && value2 < 0) || (value > 0 && value2 <= 0))
             {
-                newValue = BlockColors.Add(grid.GetValueAt(mirrorPosition), MirrorSquareAxisThroughSquare(gridSquare.value, axis));
+                BlockColors newValue = BlockColors.Add(grid.GetValueAt(mirrorPosition), MirrorSquare(gridSquare.value, axis));
                 tempGrid.SetValueAt(mirrorPosition, newValue);
-
-            }
-            else
-            {
-                float value = Vector2.Dot(mirrorPosition - position, axis);
-                float value2 = Vector2.Dot(gridSquare.gridPosition - position, axis);
-                if((value >= 0 && value2 < 0) || (value > 0 && value2 <= 0))
-                {
-                    newValue = BlockColors.Add(grid.GetValueAt(mirrorPosition), MirrorSquare(gridSquare.value, axis));
-                    tempGrid.SetValueAt(mirrorPosition, newValue);
-                }
             }
         }
+    }
+
+    private bool AxisCutsThroughSquare(Vector2Int gridPosition, Vector2Int position, Vector2Int axis)
+    {
+        int corner1 = FindClosestDistance(gridPosition + new Vector2Int(0, 0), position, axis);
+        int corner2 = FindClosestDistance(gridPosition + new Vector2Int(1, 0), position, axis);
+        int corner3 = FindClosestDistance(gridPosition + new Vector2Int(0, 1), position, axis);
+        int corner4 = FindClosestDistance(gridPosition + new Vector2Int(1, 1), position, axis);
+        return corner1 + corner2 + corner3 + corner4 == 2;
+
     }
 
     private BlockColors MirrorSquare(BlockColors square, Vector2Int axis)
@@ -224,6 +237,10 @@ public class PatternGrid : MonoBehaviour
         if(isFinishedPattern())
         {
             SoundManager.Instance?.Play(Audio.Success);
+            if(DrawingBridge.Instance != null)
+            {
+                DrawingBridge.Instance.captureTexture = carpetRender.toTexture2D();
+            }
             DrawingBridge.Instance?.EndDrawing(oldGrid.Count);
             if(SceneManager.GetSceneByName("PatternCreationRepair") != null && wantedPattern != null)
             {
@@ -333,21 +350,21 @@ public class PatternGrid : MonoBehaviour
 
     public static int ManhattanDistance(Vector2Int a, Vector2Int b)
     {
-        checked
-        {
-            return Mathf.Abs(a.x - b.x) + Mathf.Abs(a.y - b.y);
-        }
+        return Mathf.Abs(a.x - b.x) + Mathf.Abs(a.y - b.y);
     }
 
     public static int FindClosestDistance(Vector2Int a, Vector2Int b, Vector2Int axis)
     {
-        int delta = 1000000;
-        for(int i = -100; i < 100; i++)
-        {
-            int potentialDelta = ManhattanDistance((a + i * new Vector2Int(axis.y, -axis.x)), b);
-            delta = Mathf.Min(delta, potentialDelta);
-        }
-        return delta;
+        return Enumerable.Range(-100, 200).Min(i => ManhattanDistance((a + i * new Vector2Int(axis.y, -axis.x)), b));
+    }
+
+
+
+    enum Move
+    {
+        AddPiece,
+        Mirror,
+        Multiply,
     }
 
 }

@@ -37,6 +37,10 @@ public class Carpet : MonoBehaviour
             isFinished = value;
             List<Material> materialsToSet = meshRenderer.materials.ToList();
             materialsToSet[0] = repairedMaterial;
+            if(DrawingBridge.Instance.captureTexture)
+            {
+                materialsToSet[0].mainTexture = DrawingBridge.Instance.captureTexture;
+            }
             meshRenderer.SetMaterials(materialsToSet);
         }
     }
@@ -58,7 +62,9 @@ public class Carpet : MonoBehaviour
     public void TryToTakeItem()
     {
         if(!PhysicalInventory.Instance.HasFreeSpace)
+        {
             return;
+        }
 
         PhysicalInventory.Instance.AddItem(takeableHandler);
         interactionReceiver.InteractionInfo = isInInventoryInteractionInfo;
@@ -73,7 +79,9 @@ public class Carpet : MonoBehaviour
     private void TryToDropItem()
     {
         if(!takeableHandler.IsInAnyInventory)
+        {
             return;
+        }
 
         PhysicalInventory.Instance.RemoveItem(takeableHandler);
         interactionReceiver.InteractionInfo = isNotInInventoryInteractionInfo;

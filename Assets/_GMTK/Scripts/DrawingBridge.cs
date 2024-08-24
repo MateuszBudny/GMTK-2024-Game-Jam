@@ -11,6 +11,8 @@ public class DrawingBridge : SingleBehaviour<DrawingBridge>
     public int wallet;
     public CarpetRepairStation carpetRepairStation;
 
+    public Texture2D captureTexture;
+
     public void EndDrawing(int carpetCost)
     {
         CursorManager.Instance.CurrentCursorLockMode = CursorLockMode.Locked;
