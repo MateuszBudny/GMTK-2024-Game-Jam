@@ -20,6 +20,8 @@ public class PatternGrid : MonoBehaviour
 
     [SerializeField] public float wantedPatternOpacity = 0.2f;
 
+    [SerializeField] public Vector2Int startDragPosition = new Vector2Int(-1, -1);
+
 
     public Stack<Grid2D<BlockColors>> oldGrid = new();
 
@@ -127,6 +129,30 @@ public class PatternGrid : MonoBehaviour
 
     }
 
+    public void MultiplyPattern(Vector2Int start, Vector2Int end)
+    {
+        oldGrid.Push(grid.Clone() as Grid2D<BlockColors>);
+        var tempGrid = (Grid2D<BlockColors>)grid.Clone();
+
+        Vector2Int dir = end - start;
+        dir = new Vector2Int(dir.x > 0 ? 1 : dir.x < 0 ? -1 : 0, dir.y > 0 ? 1 : dir.y < 0 ? -1 : 0);
+        BlockColors startColors = grid.GetValueAt(start);
+
+
+        while(start != end + dir)
+        {
+            BlockColors newValue = BlockColors.Add(grid.GetValueAt(start), startColors);
+
+            tempGrid.SetValueAt(start, newValue);
+            start += dir;
+        }
+
+        grid = tempGrid;
+        RedrawGrid(grid);
+
+        SoundManager.Instance?.Play(Audio.MultiplyPattern);
+
+    }
     private void HandleStraightMirror(Vector2Int position, Vector2Int axis, Grid2D<BlockColors>.GridSpot<BlockColors> gridSquare, Grid2D<BlockColors> tempGrid)
     {
         int delta = Mathf.FloorToInt(Vector2.Dot(position - gridSquare.gridPosition, axis));
@@ -179,15 +205,6 @@ public class PatternGrid : MonoBehaviour
         }
     }
 
-    private bool AxisCutsThroughSquare(Vector2Int gridPosition, Vector2Int position, Vector2Int axis)
-    {
-        int corner1 = FindClosestDistance(gridPosition + new Vector2Int(0, 0), position, axis);
-        int corner2 = FindClosestDistance(gridPosition + new Vector2Int(1, 0), position, axis);
-        int corner3 = FindClosestDistance(gridPosition + new Vector2Int(0, 1), position, axis);
-        int corner4 = FindClosestDistance(gridPosition + new Vector2Int(1, 1), position, axis);
-        return corner1 + corner2 + corner3 + corner4 == 2;
-
-    }
 
     private BlockColors MirrorSquare(BlockColors square, Vector2Int axis)
     {
@@ -287,6 +304,33 @@ public class PatternGrid : MonoBehaviour
             SoundManager.Instance?.Play(Audio.RemoveOrRevert);
         }
 
+
+        if(Input.GetMouseButtonDown(0))
+        {
+            Vector3 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+            if(grid.IsInsideGrid(grid.GetGridPosition(new Vector2(mousePosition.x, mousePosition.z))))
+            {
+                startDragPosition = grid.GetGridPosition(new Vector2(mousePosition.x, mousePosition.z));
+            }
+            else
+            {
+                startDragPosition = new Vector2Int(-1, -1);
+            }
+        }
+
+        if(Input.GetMouseButtonUp(0))
+        {
+            Vector3 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+            if(grid.IsInsideGrid(grid.GetGridPosition(new Vector2(mousePosition.x, mousePosition.z))) && startDragPosition != new Vector2Int(-1, -1))
+            {
+                MultiplyPattern(startDragPosition, grid.GetGridPosition(new Vector2(mousePosition.x, mousePosition.z)));
+            }
+            else
+            {
+                startDragPosition = new Vector2Int(-1, -1);
+            }
+        }
+
         DisableAllRenderers(!Input.GetKey(KeyCode.L));
 
     }
@@ -358,6 +402,15 @@ public class PatternGrid : MonoBehaviour
         return Enumerable.Range(-100, 200).Min(i => ManhattanDistance((a + i * new Vector2Int(axis.y, -axis.x)), b));
     }
 
+    private bool AxisCutsThroughSquare(Vector2Int gridPosition, Vector2Int position, Vector2Int axis)
+    {
+        int corner1 = FindClosestDistance(gridPosition + new Vector2Int(0, 0), position, axis);
+        int corner2 = FindClosestDistance(gridPosition + new Vector2Int(1, 0), position, axis);
+        int corner3 = FindClosestDistance(gridPosition + new Vector2Int(0, 1), position, axis);
+        int corner4 = FindClosestDistance(gridPosition + new Vector2Int(1, 1), position, axis);
+        return corner1 + corner2 + corner3 + corner4 == 2;
+
+    }
 
 
     enum Move
