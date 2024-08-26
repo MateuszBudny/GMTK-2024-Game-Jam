@@ -8,10 +8,20 @@ public class CameraDrag : MonoBehaviour
     [SerializeField] private float zoomSpeed = 1;
     [SerializeField] private Canvas canvas;
 
+    [SerializeField] private PatternGrid patternGrid;
     [SerializeField] private Vector2 cameraSize = new Vector2(2, 100);
 
     private Vector3 dragOrigin;
     private bool dragging = false;
+
+    private void Start()
+    {
+        Vector2 size = Vector2.Scale(patternGrid.grid.gridSize, patternGrid.grid.cellSize);
+        Vector3 position = new Vector3(size.x / 2, 100, size.y / 2);
+
+        dragCamera.transform.position = position;
+        dragCamera.orthographicSize = size.x / 2;
+    }
 
     void Update()
     {
